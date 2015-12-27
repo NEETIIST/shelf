@@ -1,0 +1,84 @@
+{
+  "name": "yo",
+  "version": "1.5.1",
+  "description": "CLI tool for running Yeoman generators",
+  "license": "BSD-2-Clause",
+  "repository": "yeoman/yo",
+  "author": "Yeoman",
+  "bin": "lib/cli.js",
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "scripts": {
+    "test": "xo && mocha test/**/*.js",
+    "postinstall": "yodoctor",
+    "postupdate": "yodoctor",
+    "prepublish": "nsp check"
+  },
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "cli-app",
+    "cli",
+    "front-end",
+    "development",
+    "dev",
+    "build",
+    "web",
+    "tool",
+    "scaffold",
+    "stack",
+    "yeoman",
+    "generator",
+    "generate",
+    "app",
+    "boilerplate"
+  ],
+  "dependencies": {
+    "async": "^1.0.0",
+    "chalk": "^1.0.0",
+    "configstore": "^1.0.0",
+    "cross-spawn-async": "^2.0.0",
+    "figures": "^1.3.5",
+    "fullname": "^2.0.0",
+    "got": "^5.0.0",
+    "humanize-string": "^1.0.0",
+    "inquirer": "^0.11.0",
+    "insight": "^0.7.0",
+    "lodash": "^3.2.0",
+    "meow": "^3.0.0",
+    "npm-keyword": "^4.1.0",
+    "opn": "^3.0.2",
+    "package-json": "^2.1.0",
+    "read-pkg-up": "^1.0.1",
+    "repeating": "^2.0.0",
+    "root-check": "^1.0.0",
+    "sort-on": "^1.0.0",
+    "string-length": "^1.0.0",
+    "titleize": "^1.0.0",
+    "update-notifier": "^0.5.0",
+    "user-home": "^2.0.0",
+    "yeoman-character": "^1.0.0",
+    "yeoman-doctor": "^2.0.0",
+    "yeoman-environment": "^1.2.7",
+    "yosay": "^1.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0",
+    "mockery": "^1.4.0",
+    "nock": "^2.0.1",
+    "nsp": "^2.2.0",
+    "proxyquire": "^1.0.1",
+    "registry-url": "^3.0.0",
+    "sinon": "^1.12.1",
+    "xo": "*"
+  },
+  "xo": {
+    "space": true,
+    "envs": [
+      "node",
+      "mocha"
+    ]
+  }
+}
