@@ -1,0 +1,30 @@
+{
+  "name": "shelf",
+  "version": "1.0.0",
+  "description": "O nosso apoio aos alunos é constante, por isso, também oferecemos um respositório de material de apoio ao estudo, com mais de 70000 ficheiros, entre os quais exercicios, testes e apontamentos de todas as Unidades Curriculares do curso.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n1z/shelf.git"
+  },
+  "keywords": [
+    "shelf",
+    "neeti",
+    "ist"
+  ],
+  "author": "n1z",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/n1z/shelf/issues"
+  },
+  "homepage": "https://github.com/n1z/shelf#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "mongoose": "^4.3.4"
+  }
+}
