@@ -1,8 +1,50 @@
+<style>
+.selected{ background: #ccc; }
+</style>
 <div>
-<h1>There are {{documents.length}} documents in {{title}}</h1>
-<ul>
-  <li ng-repeat="document in documents">
-    {{document.name}}
-  </li>
-</ul>
+	<h1>There are {{documents.length}} documents in {{title}}</h1>
+	
+	<input type="text" placeholder="Search" ng-model="search" >
+	<div>
+		<p>Professor</p>
+		<label ng-repeat="teacher in teachers">
+				<input type="checkbox" ng-model="t" ng-change="toggleTeacher(teacher)"> 
+				{{teacher}}
+		</label>
+
+		<p>Conteúdos</p>
+		<label ng-repeat="type in types">
+				<input type="checkbox" ng-model="t" ng-change="toggleType(type)"> 
+				{{type}}
+		</label>
+
+		<p>Tags</p>
+		<label ng-repeat="tag in tags">
+				<button ng-class="{'selected': !(selected.tags.indexOf(tag) == -1)}" ng-click="toggleTag(tag)">
+				{{tag}}</button>
+
+		</label>
+	</div>
+
+	<br>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Uploader</th>
+				<th>Uploaded</th>
+				<th>Semestre</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr ng-repeat="doc in documents | filter:filterTeacher | filter:search | filter: filterType | filter: filterTag">
+				<td>{{doc.name}}</td>
+				<td>{{doc.uploader}}</td>
+				<td>{{doc.uploaded}}</td>
+				<td>{{doc.academicTerm}}</td>
+			</tr>
+		</tbody>
+	</table>
 </div>

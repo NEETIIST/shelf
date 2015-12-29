@@ -30,6 +30,9 @@ var rest = require("./server/api");
 app.get('/api/degrees', rest.degrees);
 app.get('/api/:degree/courses', rest.courses);
 app.get('/api/:course/docs', rest.docs);
+app.get('/api/:course/teachers', rest.teachers);
+app.get('/api/:course/tags', rest.tags);
+app.get('/api/:course/types', rest.types);
 
 
 

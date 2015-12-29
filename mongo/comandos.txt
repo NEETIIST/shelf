@@ -1,0 +1,8 @@
+
+# import json
+mongoimport --collection documents --db shelf --file example.json
+
+
+# find
+db.documents.find({ course: "ARede917"}).pretty()
+

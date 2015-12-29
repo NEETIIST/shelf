@@ -5,7 +5,7 @@ for (i = 0; i < course.length; i++) {
    	acronym += course[i];
    } 
 } 
-alert(acronym);
+console.log(acronym);
 
 
 
