@@ -16,10 +16,18 @@ module.exports.person = function(token,callback){
 
 module.exports.courses = function(token,callback){
 	//https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person/courses?academicTerm=2013/2014
-	request('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person/coursesn?access_token='+token, 
+	request('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/person/courses?access_token='+token, 
 	function (err, res, body) {
+
+		results = JSON.parse(body);
 		
-		callback(err,JSON.parse(body));
+		var tmp = results['enrolments'];
+		var courses = [];
+		for(i=0; i<tmp.length; i++){
+			courses.push(tmp[i].name);
+		}
+		
+		callback(err,courses);
   	
   	});
 

@@ -1,8 +1,15 @@
-app.controller('courses', ['$scope', 
+app.controller('courses', ['$scope','$resource', 
 
-	function ($scope) {
+	function ($scope,$resource) {
 
-		$scope.title = "Shelf";
+		// Document
+		var Course = $resource('/api/leti/courses');
+		
+		Course.query(function (results) {
+			$scope.courses = results;
+		});
+		$scope.courses = [];
+
 	}
 
 ]);

@@ -12,6 +12,13 @@ var	app = express();
 require("./server/config/passport")(passport);
 require("./server/config/express")(app,passport);
 
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated())
+    	return next();
+    
+	res.redirect('/');
+}
+
 
 // connect to database
 mongoose.connect('mongodb://localhost:27017/shelf');
@@ -29,14 +36,18 @@ app.use('/images', express.static(__dirname + '/client/images'));
 
 // REST API
 var rest = require("./server/api");
-app.get('/api/degrees', rest.degrees);
-app.get('/api/:degree/courses', rest.courses);
-app.get('/api/:course/docs', rest.docs);
-app.get('/api/:course/teachers', rest.teachers);
-app.get('/api/:course/tags', rest.tags);
-app.get('/api/:course/types', rest.types);
+app.get('/api/degrees', isLoggedIn, rest.degrees);
+app.get('/api/:degree/courses', isLoggedIn, rest.courses);
+app.get('/api/:course/docs', isLoggedIn, rest.docs);
+app.get('/api/:course/teachers', isLoggedIn, rest.teachers);
+app.get('/api/:course/tags', isLoggedIn, rest.tags);
+app.get('/api/:course/types', isLoggedIn, rest.types);
 
 
+
+app.use(function(req,res){
+	res.redirect('/');
+});
 
 // start server
 app.listen(80, function() {

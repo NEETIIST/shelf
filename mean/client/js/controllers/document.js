@@ -18,7 +18,7 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 		$scope.selected = {
 			teachers : [],
 			tags : [],
-			type : ""
+			types : []
 		};
 
 
@@ -73,16 +73,16 @@ app.controller('document', ['$scope', '$resource','$routeParams',
     	// Type
 		$scope.types = [ "Prática", "Slides" ];
 		$scope.toggleType = function(type) {
-    		if($scope.selected.type==type){
-    			$scope.selected.type = "";
-    		}else{
-    			$scope.selected.type = type;
-    		}
+    		var i = $scope.selected.types.indexOf(type);
+    		if (i === -1)
+        		$scope.selected.types.push(type);
+    		else
+        		$scope.selected.types.splice(i,1);
 		};
 		$scope.filterType = function(doc) {
-			if($scope.selected.type=="")
+			if($scope.selected.types.length==0)
 				return true;
-			if(doc.type == $scope.selected.type)
+			if($scope.selected.types.indexOf(doc.type) != -1)	
         		return true;
         	return false;
     	};

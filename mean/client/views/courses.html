@@ -18,25 +18,9 @@
 </div>
 
 <ul class="list-group cadeira">
-    <a class="list-group-item" href="cadeira.html">
-        <span class="label label-primary">AR</span>
-        Arquitectura de Redes
-    </a>
-    <a class="list-group-item" href="cadeira.html">
-        <span class="label label-primary">BD</span>
-        Base de Dados           
-    </a>
-    <a class="list-group-item" href="cadeira.html">
-        <span class="label label-primary">Ges</span>
-        Gestão      
-    </a>
-    <a class="list-group-item" href="cadeira.html">
-        <span class="label label-primary">ICSE</span>
-        Introdução aos Circuitos e Sistemas Electrónicos    
-    </a>
-    <a class="list-group-item" href="cadeira.html">
-        <span class="label label-primary">PA</span> 
-        Propagação e Antenas      
+    <a ng-repeat="course in courses | orderBy:'name'" class="list-group-item" ng-href="#/course/{{course.acronym}}">
+        <span class="label label-primary">{{course.acronym}}</span>
+        {{course.name}}
     </a>
 </ul>
 

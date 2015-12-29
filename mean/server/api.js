@@ -3,6 +3,8 @@ var Degree		= require("./models/degree");
 var Course		= require("./models/course");
 var Document	= require("./models/document");
 
+var fenix = require("./config/fenix");
+
 
 Array.prototype.unique = function() {    
     var o = {}, i, l = this.length, r = [];    
@@ -22,16 +24,28 @@ module.exports.degrees 	= function(req,res) {
 
 module.exports.courses	= function(req,res) {
 
-	Course.find({ degree: req.params.degree }, 
+	Course.find({}, 
 		function (err, results) {
-    		res.json(results);
-  		}
-  	);
+
+      fenix.courses(req.user.accessToken,function(err,tmp){
+          var courses = [];
+          console.log(req.user);
+          for(i=0; i<results.length; i++){
+            if(tmp.indexOf(results[i].name) != -1){
+              courses.push(results[i])
+            }
+          }
+        res.json(courses);
+
+      });
+  	}
+  );
 };
 
 module.exports.docs		= function(req,res) {
 	Document.find({ course: req.params.course, aproved: true }, 
 		function (err, results) {
+        console.log(results);
     		res.json(results);
   		}
   	);

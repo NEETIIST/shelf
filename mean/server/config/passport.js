@@ -7,15 +7,21 @@ module.exports = function(passport){
 
     // get username from fenix login
     OAuth2.prototype.userProfile = function(token,done){
-        fenix.person(token,function(err,res){
-            return done(null, {username: res.username});
+        var result = {};
+        fenix.person(token,function(err,user){
+            result.username = user.username;
+            result.accessToken = user.accessToken;
+            result.refreshToken = user.refreshToken;
+
+            return done(null, result);
+            
         });
-    }
+    }; 
 
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
-        console.log("serialize ")
+        
         done(null, user.username);
     });
 
@@ -51,6 +57,7 @@ module.exports = function(passport){
                         username : profile.username,
                         accessToken : accessToken,
                         refreshToken : refreshToken
+
                     }, function(err,user){
                         if (err)
                             return done(err);
