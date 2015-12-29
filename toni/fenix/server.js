@@ -5,8 +5,7 @@ var fenix = require("./fenix");
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var flash    = require('connect-flash');
-var configDB = require('./config/database.js');
+
 
 // DB configuration ===============================================================
 mongoose.connect('mongodb://localhost:27017/toni'); // connect to our database
@@ -35,7 +34,7 @@ app.use(require('express-session')({
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
-//app.use(flash()); // use connect-flash for flash messages stored in session
+
 
 
 

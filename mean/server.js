@@ -3,26 +3,28 @@
 // require dependencies
 var express 	= require("express"),
 	mongoose	= require("mongoose"),
-	bodyParser	= require("body-parser");
+	bodyParser	= require("body-parser"),
+	passport    = require("passport");
 
-// configure app with express
+
 var	app = express();
-	app.use(bodyParser());
+
+require("./server/config/passport")(passport);
+require("./server/config/express")(app,passport);
+
 
 // connect to database
 mongoose.connect('mongodb://localhost:27017/shelf');
 
 
-
-// views
-app.get('/', function (req, res) {
-	res.sendfile(__dirname + '/client/index.html');
-});
+// routes
+require("./server/routes.js")(app,passport);
 
 // public folders
 app.use('/js', express.static(__dirname + '/client/js'));
 app.use('/views', express.static(__dirname + '/client/views'));
-
+app.use('/css', express.static(__dirname + '/client/css'));
+app.use('/images', express.static(__dirname + '/client/images'));
 
 
 // REST API
@@ -37,6 +39,6 @@ app.get('/api/:course/types', rest.types);
 
 
 // start server
-app.listen(3000, function() {
+app.listen(80, function() {
 	console.log('Server listening...');
 });

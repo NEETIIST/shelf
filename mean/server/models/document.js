@@ -9,6 +9,6 @@ module.exports = mongoose.model('Document', {
 	uploaded: 		{ type: Date, default: Date.now },
 	academicTerm: 	String,
 	tags: 			[String],
-	aproved: 		Boolean,
-	url: 			String 
+	approved: 		Boolean,
+	content: 		[String]
 });

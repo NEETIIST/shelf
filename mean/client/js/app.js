@@ -8,8 +8,8 @@ app.config(function($routeProvider, $locationProvider) {
     		controller: 'document'
   		})
   		.when('/', {
-    		templateUrl: 'views/test.html',
-    		controller: 'test'
+    		templateUrl: 'views/courses.html',
+    		controller: 'courses'
   		})
   		.otherwise({ redirectTo: '/'});
 });
