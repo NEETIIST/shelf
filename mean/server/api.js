@@ -88,3 +88,16 @@ module.exports.types   = function(req,res) {
     );
 };
 
+module.exports.academicTerms   = function(req,res) {
+  Document.find({ course: req.params.course, aproved: true }, 
+    function (err, results) {
+        terms = [];
+        for(i=0; i<results.length; i++){
+          if(results[i].academicTerm) terms.push(results[i].academicTerm)
+        }
+        terms.unique();
+        res.json(terms);
+      }
+    );
+};
+

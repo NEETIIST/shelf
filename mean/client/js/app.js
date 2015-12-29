@@ -1,4 +1,5 @@
-var app = angular.module('shelf', ['ngResource','ngRoute']);
+var app = angular.module('shelf', ['ngResource','ngRoute','angularjs-dropdown-multiselect','hljs',
+  'ui.bootstrap']);
 
 
 app.config(function($routeProvider, $locationProvider) {

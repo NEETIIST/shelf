@@ -13,12 +13,35 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 		});
 		$scope.documents = [];
 
+		// Terms
+		var Term = $resource('/api/'+$routeParams.course+'/terms');
+		Term.query(function (results) {
+			for(i=1; i<results.length+1; i++){
+				$scope.terms.push({id:i,label:results[i-1]});
+			}
+		});
+		$scope.terms = [];
+
+		$scope.filterTerm = function(doc){
+			if($scope.selected.terms.length==0)
+				return true;
+
+			for(i=0; i<$scope.selected.terms.length; i++){
+				if(doc.academicTerm==$scope.terms[$scope.selected.terms[i].id-1].label)
+					return true;
+			}
+        	return false;
+		}
+
+		
+
 
 		// Selected
 		$scope.selected = {
 			teachers : [],
 			tags : [],
-			types : []
+			types : [],
+			terms : []
 		};
 
 
@@ -71,7 +94,11 @@ app.controller('document', ['$scope', '$resource','$routeParams',
     	};
 
     	// Type
-		$scope.types = [ "Prática", "Slides" ];
+		var Type = $resource('/api/'+$routeParams.course+'/types');
+		Type.query(function (results) {
+			$scope.types = results;
+		});
+		$scope.types = [];
 		$scope.toggleType = function(type) {
     		var i = $scope.selected.types.indexOf(type);
     		if (i === -1)
@@ -82,16 +109,15 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 		$scope.filterType = function(doc) {
 			if($scope.selected.types.length==0)
 				return true;
-			if($scope.selected.types.indexOf(doc.type) != -1)	
-        		return true;
+    		if($scope.selected.types.indexOf(doc.type) != -1)	
+    			return true;
+			
         	return false;
     	};
 
-
     	// Tests
 		$scope.test = function(){
-			console.log("$scope.selected.teachers");
-			console.log($scope.selected);
+			console.log($scope.selected.terms);
 		};
 
 

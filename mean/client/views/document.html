@@ -5,7 +5,7 @@
 </ol>
 
 <div id="intro" class="jumbotron hidden-xs">
-    <h1>Arquitectura de Redes</h1>
+    <h1 ng-click="test()">Arquitectura de Redes</h1>
     Entender os princípios fundadores das redes de computadores. Fornecer uma visão global do funcionamento da Internet, enquanto rede integradora de tecnologias heterogéneas. Fornecer competências avançadas de programação de redes e de manipulação de equipamentos de redes.
 </div>
 
@@ -29,30 +29,9 @@
             <div class="panel-body">
 
 
-                <div ng-dropdown-multiselect="" options="example1data" selected-model="example1model"></div>
+                <div ng-dropdown-multiselect="" options="terms" selected-model="selected.terms"></div>
+
                 
-                <select class="selectpicker" multiple data-actions-box="true" data-size="5">
-                    <option>2015 2º Semestre</option>
-                    <option>2015 1º Semestre</option>
-                    <option data-divider="true"></option>
-                    <option>2014 2º Semestre</option>
-                    <option>2014 1º Semestre</option>
-                    <option data-divider="true"></option>
-                    <option>2013 2º Semestre</option>
-                    <option>2013 1º Semestre</option>
-                    <option data-divider="true"></option>
-                    <option>2012 2º Semestre</option>
-                    <option>2012 1º Semestre</option>
-                    <option data-divider="true"></option>
-                    <option>2011 2º Semestre</option>
-                    <option>2011 1º Semestre</option>
-                    <option data-divider="true"></option>
-                    <option>2011 2º Semestre</option>
-                    <option>2011 1º Semestre</option>
-                    <option data-divider="true"></option>
-                    <option>2011 2º Semestre</option>
-                    <option>2011 1º Semestre</option>
-                </select>
             </div>
         </div> 
        
@@ -103,7 +82,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="doc in documents | filter:filterTeacher | filter:search | filter: filterType | filter: filterTag">
+                <tr ng-repeat="doc in documents | filter:filterTeacher | filter:search | filter: filterType | filter: filterTag | filter: filterTerm">
                     <td>{{doc.name}}</td>
 					<td>{{doc.uploader}}</td>
 					<td>{{doc.uploaded}}</td>
