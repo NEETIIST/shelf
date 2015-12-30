@@ -1,0 +1,1 @@
+/usr/bin/vncserver -depth 16 -geometry 1024x768 :0

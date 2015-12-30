@@ -47,6 +47,10 @@ module.exports = function(passport){
                 if (err)
                     return done(err);
                 if (user) {
+                    user.accessToken = accessToken;
+                    user.save()
+
+
                     return done(null, user);
                 }
                 else {

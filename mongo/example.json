@@ -14,7 +14,7 @@
 
 {"name": "Prática111", "uploader": "ist177969", "type": "prática","teachers":["halib"], "course": "BD", "uploaded": "1998-07-16T19:20:30+00:00", "academicTerm": "1 Semestre 2013/2014", "aproved": true}
 {"name": "Prática122", "uploader": "ist177969", "type": "coiso","teachers":["halib"], "course": "BD", "uploaded": "1998-07-16T19:20:30+00:00", "academicTerm": "1 Semestre 2015/2016", "aproved": true}
-{"name": "Prática122", "uploader": "ist177969", "type": "coiso","teachers":["carla"], "course": "BD", "uploaded": "1998-07-16T19:20:30+00:00", "academicTerm": "1 Semestre 2015/2016", "aproved": true}
+{"name": "Prática122", "uploader": "ist177969", "type": "poid","teachers":["carla"], "course": "BD", "uploaded": "1998-07-16T19:20:30+00:00", "academicTerm": "1 Semestre 2015/2016", "aproved": true}
 
 ]
 

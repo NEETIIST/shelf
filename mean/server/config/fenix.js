@@ -22,6 +22,8 @@ module.exports.courses = function(token,callback){
 		results = JSON.parse(body);
 		
 		var tmp = results['enrolments'];
+		console.log('toni');
+		console.log(results);
 		var courses = [];
 		for(i=0; i<tmp.length; i++){
 			courses.push(tmp[i].name);
