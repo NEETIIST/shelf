@@ -49,35 +49,23 @@ module.exports = function(app) {
 
 	app.post('/api/upload', isLoggedIn, multipartyMiddleware, function(req, res) {
 
-		console.log(req.body);
-
 		if(req.body.session){
 
-			Upload.findOne({ session: req.body.session },function (err, obj) {
+			var file = req.files.file;
+	  		var filename = file.path.replace(/^.*[\\\/]/, '')
+			fs.rename(file.path, path.join(__dirname, '../../content', filename), function(){
 
-      			if(obj.session){
+				Upload.findOneAndUpdate(
+					{ session: req.body.session },
+					{ $addToSet: {files: filename} },
+					{safe: true, upsert: true},
+					function(err, model) { 
+						
+						res.json(model);
 
-	      			var file = req.files.file;
-	  				var filename = file.path.replace(/^.*[\\\/]/, '')
-					fs.rename(file.path, path.join(__dirname, '../../content', filename), function(){
-
-						console.log("Uploaded file: "+filename);
-
-						result = {
-							file 		: filename,
-							size 		: file.size,
-							original 	: file.originalFilename,
-							type 		: file.type,
-						};
-
-						obj.files.push(filename);
-						obj.save();
-						res.json(result);
-
-					});
-				} else res.status(403).send('Upload error!');
-
-      		});
+					}
+				);
+			});
 		}
 		else res.status(403).send('Upload error!');
 		
@@ -85,38 +73,44 @@ module.exports = function(app) {
 
 	app.post('/api/:course/docs', isLoggedIn, function(req,res){
 
-		console.log(req.body);
+		console.log("/api/:course/docs");
 
 		
 		Upload.findOne({session: req.body.session},function(err,obj){
 
+			console.log("Upload.findOne");
+
+			data = req.body;
+
 			var content = [];
 			for(var i=0; i<obj.files.length; i++){
+
+				console.log("\t\tFile: "+obj.files[i]);
 
 				content.push({
 					local : obj.files[i]
 				});
 			}
-			var tags = [];
-			for(var k=0; k<req.body.tags; k++){
-				tags.push(req.body.tags[i].text);
-			}
 
 			var document = new Document({
-				name: 			req.body.name,
+				name: 			data.name,
 				uploader: 		req.user.username,
-				type: 			req.body.type,
-				teacher: 		req.body.teacher,
-				course: 		req.body.course,
-				academicTerm: 	req.body.academicTerm,
-				tags: 			tags,
+				type: 			data.type,
+				teacher: 		data.teacher,
+				course: 		data.course,
+				academicTerm: 	data.academicTerm,
+				tags: 			data.tags,
 				approved: 		false,
 				content: 		content
 			});
 
+			console.log("doc.save");
+
 			document.save(function(err,data){
-				if(!err)
+				if(!err){
+					console.log("res.json(data)");
 					res.json(data);
+				}
 				
 			});
 

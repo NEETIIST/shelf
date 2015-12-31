@@ -40,6 +40,8 @@ var rest = require("./server/api");
 app.get('/api/degrees', isLoggedIn, rest.degrees);
 app.get('/api/user/courses', isLoggedIn, rest.courses);
 app.get('/api/user/docs', isLoggedIn, rest.userDocs);
+app.get('/api/docs/:docid', isLoggedIn, rest.doc);
+app.get('/api/course/:course', isLoggedIn, rest.course);
 app.get('/api/:degree/courses', isLoggedIn, rest.degreeCourses);
 app.get('/api/:degree/types', isLoggedIn, rest.degreeTypes);
 app.get('/api/:course/docs', isLoggedIn, rest.docs);

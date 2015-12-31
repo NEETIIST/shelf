@@ -5,6 +5,23 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 		// Title
 		$scope.title = $routeParams.course;
 
+
+
+		// Course
+		var Course = $resource('/api/course/:courseid',{courseid:'@courseid'});
+
+		Course.get({courseid:$routeParams.course}, function(course) {
+  			$scope.title = course.name;
+		});
+
+		$scope.go = function ( docid ) {
+			var url = "/preview/#/"+docid;
+			console.log(url);
+			window.location.href=url;
+		};
+
+
+
 		// Document
 		var Document = $resource('/api/'+$routeParams.course+'/docs');
 		Document.query(function (results) {

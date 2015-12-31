@@ -119,10 +119,24 @@ module.exports.degreeCourses  = function(req,res){
 
 };
 
+module.exports.course = function (req,res) {
+  Course.findOne({acronym: req.params.course}, function(err, result){
+    res.json(result);  
+  });
+}
+
 module.exports.docs   = function(req,res) {
   Document.find({ course: req.params.course, approved: true }, 
     function (err, results) {
         res.json(results);
+      }
+    );
+};
+
+module.exports.doc   = function(req,res) {
+  Document.findById(req.params.docid, 
+    function (err, result) {
+        res.json(result);
       }
     );
 };
@@ -140,8 +154,10 @@ module.exports.doc_teachers   = function(req,res) {
     function (err, results) {
         teachers = [];
         for(i=0; i<results.length; i++){
-          teachers = teachers.concat(results[i].teachers).unique();
+          teachers.push(results[i].teacher);
+          teachers.unique();
         }
+        
         res.json(teachers);
       }
     );
@@ -166,7 +182,6 @@ module.exports.tags   = function(req,res) {
         for(i=0; i<results.length; i++){
           tags = tags.concat(results[i].tags).unique();
         }
-        console.log(tags);
         res.json(tags);
       }
     );
@@ -180,6 +195,7 @@ module.exports.types   = function(req,res) {
           if(results[i].type) types.push(results[i].type)
         }
         types.unique();
+        console.log(types);
         res.json(types);
       }
     );

@@ -21,11 +21,9 @@ listChildFiles = function (auth,parents,done) {
     } else {
       
       for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        
+        var file = files[i];  
       }
       listFiles(auth,files, function(err, fileschild){
-
 
         return done(null,fileschild );
       })
@@ -40,24 +38,19 @@ listFiles = function (auth,childsID,done) {
 
  fileschild=[];
   service.files.list({
-    auth: auth,
-
-    
+    auth: auth,   
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
       return;
     }
-
     var files = response.items;
     if (files.length == 0) {
       console.log('No files found.');
       return done(null, files);
-    } else {
-      
+    } else { 
       for (var i = 0; i < childsID.length; i++) {
-        for (var p = 0; p < files.length; p++) {
-         
+        for (var p = 0; p < files.length; p++) { 
           if(childsID[i].id==files[p].id){
             fileschild.push(files[p]);
              
@@ -75,51 +68,30 @@ listFiles = function (auth,childsID,done) {
 
 folder=function(auth,course,term,done){
   var paternsId=0;
- 
   listChildFiles(auth,ROOTFOLDER, function(err, filesCourses){
     var filesCoursesName=[];
-  
-
     for (var i = 0; i < filesCourses.length; i++) {
-
-      filesCoursesName.push(filesCourses[i].title);
-        
+      filesCoursesName.push(filesCourses[i].title);   
     }
     if (filesCoursesName.indexOf(course) > -1) {
       for (var i = 0; i < filesCourses.length; i++) {
           if(filesCourses[i].title==filesCoursesName[filesCoursesName.indexOf(course)]){
             paternsId=filesCourses[i].id
-          }
-         
+          } 
       }
-
       listChildFiles(auth,paternsId, function(err, filesTerms){
         var filesTermsName=[];
-
         for (var i = 0; i < filesTerms.length; i++) {
-
           filesTermsName.push(filesTerms[i].title);
-        
         }
-
-          if (filesTermsName.indexOf(term) > -1) {
-            
-
-            
-            
-              
-              return done(null,filesTerms[filesTermsName.indexOf(term)].id );
-           
-
-          } else {
-            createFolder(term,auth,paternsId, function(err, id){
-             
-              return done(null,id );
+        if (filesTermsName.indexOf(term) > -1) {
+          return done(null,filesTerms[filesTermsName.indexOf(term)].id );
+        } else {
+          createFolder(term,auth,paternsId, function(err, id){ 
+            return done(null,id );
             })
           }
-
-    })
-   
+    }) 
     } else {
       createFolder(course,auth,ROOTFOLDER, function(err, id){
          createFolder(term,auth,id, function(err, termId){
@@ -127,8 +99,6 @@ folder=function(auth,course,term,done){
           })
       })
     }
-   
-  
     })      
 }
 
@@ -149,8 +119,7 @@ createFolder =function (title,auth,parents,done){
     if(err){
         console.log('error at gdrive create folder: ' + err);
     }else{
-        
-       
+            
         return done(null,response.id);
     }
 });
@@ -181,34 +150,24 @@ createFile =function (title,auth,parents,done){
 
 exports.insert =function (file,course,term,done){
   
-
-  folder(oauth2Client,course,term,function(err,id){
+  oauth2Client.refreshAccessToken(function(err, tokens) {
+   folder(oauth2Client,course,term,function(err,id){
     createFile(file,oauth2Client,id,function(err,fileID){
       done(null,"https://drive.google.com/open?id="+fileID)
     })
 
   })
+  });
+ 
     
 }
 
-Drive.insert("cansadocomoaputa.psd","eu","tou",function(err,argument) {
+Drive.insert("config.js","eu","tou",function(err,argument) {
     console.log(argument);
     })
 
 
 
-
-
-
-
-/****************refresh token**********************
-
-oauth2Client.refreshAccessToken(function(err, tokens) {
-  // your access_token is now refreshed and stored in oauth2Client
-  // store these new tokens in a safe place (e.g. database)
-});
-
-*****************************************************************************/
 
 
 

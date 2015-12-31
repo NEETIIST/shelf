@@ -11,7 +11,7 @@ var oauth2Client = new OAuth2("447918343020-v6nna41qs6lon9s58sfkruq1hid9j1h8.app
 var scopes = [
   'https://www.googleapis.com/auth/drive'
 ];
-/*
+
 var url = oauth2Client.generateAuthUrl({
   access_type: 'offline', // 'online' (default) or 'offline' (gets refresh_token)
   scope: scopes // If you only need one scope you can pass it as string
@@ -20,7 +20,7 @@ var url = oauth2Client.generateAuthUrl({
 console.log("URL: "+url);
 //get code from url and copy to json
 
-*/
+
 var code= '4/NpIRNJQBVSJudumC2adavxKBi6Scp0XAZ5E4SkpRejs';
 
 

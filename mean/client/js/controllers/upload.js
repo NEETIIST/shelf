@@ -86,30 +86,35 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
 
     $scope.submit = function (data){
 
-        angular.forEach($scope.files, function(file) {
-            if(file.progress==100){
-
-                course = data.course;
-                var Document = $resource('/api/'+course+'/docs');
-
-                var doc = new Document();  
-
-                var result = {
-                    name            : data.name,
-                    academicTerm    : data.academicTerm,
-                    tags            : data.tags,
-                    teacher         : data.teacher,
-                    course          : data.course,
-                    session         : $scope.session
-                };  
-
-                console.log(result); 
-
-                Document.save(result,function(){
-                    $scope.uploadComplete = true;
-                }); 
+        for(var i=0; i<$scope.files.length; i++){
+            if($scope.files[0].progress!==100){
+                return;
             }
-        });
+        }
+
+        course = data.course;
+        var Document = $resource('/api/'+course+'/docs');
+
+        var doc = new Document(); 
+
+        var tags = [];
+        for(var i=0; i<data.tags.length; i++){
+            tags.push(data.tags[i].text);
+        }
+
+        var result = {
+            name            : data.name,
+            academicTerm    : data.academicTerm,
+            tags            : tags,
+            teacher         : data.teacher,
+            course          : data.course,
+            type            : data.type,
+            session         : $scope.session
+        };
+
+        Document.save(result,function(){
+            $scope.uploadComplete = true;
+        }); 
 
     };
 

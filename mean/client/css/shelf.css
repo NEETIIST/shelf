@@ -22,6 +22,7 @@ ul.autocomplete { padding:0; }
 .table-responsive { border:0;}
 
 .table tr th { font-weight: 600; }
+.table tbody tr:hover{ cursor: pointer; }
 
 button.btn-default:focus{ 
     touch-action:none !important;

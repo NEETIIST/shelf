@@ -6,19 +6,6 @@ var mongoose =	require("mongoose");
 
 mongoose.connect('mongodb://localhost:27017/shelf');
 
-/*
-fenix.coursesByDegree(2761663971586,"2015/2016",function(err,res){
-
-	console.log(res);
-});
-
-
-
-fenix.teachersByCourse(283085589459712,function(err,res){
-
-	console.log(res);
-});*/
-
 Array.prototype.unique = function() {    
     var o = {}, i, l = this.length, r = [];    
     for(i=0; i<l;i+=1) o[this[i]] = this[i];    
@@ -56,8 +43,6 @@ Degree.find({}, function (err, results) {
 						for(var t=0; t<teachers.length; t++){
 
 							teacher = teachers[t];
-
-							//console.log(course_name+" : "+teacher.name);
 
 							insertTeacher(course_name,teacher.name);
 						}
