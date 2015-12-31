@@ -10,6 +10,13 @@ module.exports = function(app,passport){
 			res.sendFile(path.join(__dirname, '../client', 'presentation.html'));
 	});
 
+	app.get('/preview', function (req, res) {
+		if (req.isAuthenticated())
+			res.sendFile(path.join(__dirname, '../client/views/', 'preview.html'));
+		else
+			res.redirect('/');
+	});
+
 
 
 	// authentication

@@ -1,17 +1,5 @@
-var ROOTFOLDER = "0B-je9j5AlDQSN1hESldTdENHQ0E";
-var google = require('googleapis');
- var fs = require('fs');
-var service = google.drive('v2');
+require("./config.js");
 var Drive = require("./functions");
-var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2("447918343020-v6nna41qs6lon9s58sfkruq1hid9j1h8.apps.googleusercontent.com", 
-                "30Fm8I1-JPMhI2Yb8x3XSquT", 
-                "http://shelf.n1z.pt/auth/google/callback");
-
-oauth2Client.setCredentials({
-  access_token: 'ya29.WwLjn9R1F1I6CajJwvdGjk0z_iY2ybx5uwBo0F-wgJ9c0wamK72nyJqctWoiFEDcE20PPA'
-  
-});
 
 //////////functions/////////////////////////////////////////////////
 listChildFiles = function (auth,parents,done) {
@@ -192,16 +180,18 @@ createFile =function (title,auth,parents,done){
 
 
 exports.insert =function (file,course,term,done){
+  
 
   folder(oauth2Client,course,term,function(err,id){
     createFile(file,oauth2Client,id,function(err,fileID){
       done(null,"https://drive.google.com/open?id="+fileID)
     })
 
-  })   
+  })
+    
 }
 
-Drive.insert("functions.js","ist","neeti",function(err,argument) {
+Drive.insert("cansadocomoaputa.psd","eu","tou",function(err,argument) {
     console.log(argument);
     })
 

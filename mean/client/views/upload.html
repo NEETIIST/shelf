@@ -41,23 +41,37 @@
                 <form name="uploadForm" novalidate ng-submit="submit(doc)" >
                 <div class="form-group">
                     <label for="name">Nome do documento</label>
-                    <input type="text" class="form-control" name="name" placeholder="Apontamentos Aula" ng-model="doc.name" required>
-                    <span class="text-warning" ng-show="uploadForm.name.$error.required">Obrigatório!</span> 
+                    <input type="text" class="form-control" name="name" placeholder="Ex: Apontamentos Aula" ng-model="doc.name">
                 </div>
+
+                <div class="row">
+                    
+                <div class="col-md-6">
                 <div class="form-group">
-                    <label for="programtags">Tags da matéria</label>
-                    <input type="text" class="form-control" name="programtags" placeholder="Teorema Pitágoras" ng-model="doc.tags" required>
-                    <span class="text-warning" ng-show="uploadForm.programtags.$error.required">Obrigatório!</span>
+                    <label for="programtags">Tipo de conteúdo</label>
+                    <autocomplete inputname="type" type="text" inputclass="form-control" data="types" name="type" placeholder="Ex: Slides" ng-model="doc.type"></autocomplete>
+                </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="course">Cadeira</label>
+                            <autocomplete inputname="course" type="text" inputclass="form-control" data="courses" name="course" placeholder="Ex: ACED" ng-model="doc.course"></autocomplete>
+                            <span class="text-warning" ng-show="uploadForm.course.$error.required">Obrigatório!</span>
+                    </div>
+
+                </div>
                 </div>
 
 
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="form-group">
-                        <label for="course">Cadeira</label>
-                            <autocomplete inputrequired="required" inputname="course" type="text" inputclass="form-control" data="courses" name="course" placeholder="Ex: Gestão" ng-model="doc.course"></autocomplete>
-                            <span class="text-warning" ng-show="uploadForm.course.$error.required">Obrigatório!</span>
-                        </div>
+                 <div class="form-group">
+                    <label for="programtags">Tags da matéria</label>
+                    <tags-input ng-model="doc.tags">
+                        <auto-complete source="tags"></auto-complete>
+                    </tags-input>
+                    <span class="text-warning">Separadas por vírgulas</span> 
+                </div> 
                     </div>
 
                     <div class="col-md-4">
@@ -66,7 +80,7 @@
 
                             <autocomplete inputname="teacher" type="text" inputclass="form-control" data="teachers" name="course" placeholder="Ex: João Pedro Pereira Boavida" ng-model="doc.teacher"></autocomplete>
 
-                            <span class="text-warning" ng-show="uploadForm.teachers.$error.required">Obrigatório!</span>
+    
                         </div>
                     </div>
 
@@ -101,22 +115,10 @@
         <div class="js-upload-finished">
             <h4>Histórico</h4>
             <div class="list-group"> 
-                <a href="#" class="list-group-item list-group-item-danger">
-                    <span class="badge alert-danger pull-right">23-11-2014</span>
-                    amended-catalogue-01.xls
-                </a> 
-                <a href="#" class="list-group-item list-group-item-success">
-                    <span class="badge alert-success pull-right">23-11-2014</span>
-                    amended-catalogue-01.xls
-                </a> 
-                <a href="#" class="list-group-item list-group-item-success">
-                    <span class="badge alert-success pull-right">23-11-2014</span>
-                    amended-catalogue-01.xls
-                    </a> 
-                <a href="#" class="list-group-item list-group-item-success">
-                    <span class="badge alert-success pull-right">23-11-2014</span>
-                    amended-catalogue.xls
-                </a> 
+                <a ng-repeat="doc in uploaded" href="#" class="list-group-item" ng-class="{true:'list-group-item-success',false:'list-group-item-warning'}[doc.approved]">
+                    <span ng-class="{true:'alert-success',false:'alert-warning'}[doc.approved]" class="badge pull-right">{{doc.date}}</span>
+                    {{doc.name}}
+                </a>
             </div>
         </div>
     </div>

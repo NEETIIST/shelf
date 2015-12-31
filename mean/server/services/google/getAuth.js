@@ -1,6 +1,6 @@
 var google = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
-var Drive = require("./functions");
+
 
 
 var oauth2Client = new OAuth2("447918343020-v6nna41qs6lon9s58sfkruq1hid9j1h8.apps.googleusercontent.com", 
@@ -19,9 +19,9 @@ var url = oauth2Client.generateAuthUrl({
 
 console.log("URL: "+url);
 //get code from url and copy to json
-*/
 
-var code= '4/9AedYRCji7xIj-aAJsxSApeuWzIV3hb7dube7aqozOI';
+*/
+var code= '4/NpIRNJQBVSJudumC2adavxKBi6Scp0XAZ5E4SkpRejs';
 
 
 oauth2Client.getToken(code, function(err, tokens){

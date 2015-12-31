@@ -1,4 +1,4 @@
-var app = angular.module('shelf', ['ngResource','ngRoute','angularjs-dropdown-multiselect','hljs',
+var app = angular.module('shelf', ['ngTagsInput','ngResource','ngRoute','angularjs-dropdown-multiselect','hljs',
   'ui.bootstrap','ngFileUpload']);
 
 

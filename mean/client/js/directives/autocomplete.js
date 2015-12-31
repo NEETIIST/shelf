@@ -249,6 +249,7 @@ app.directive('autocomplete', function() {
             placeholder="{{ attrs.placeholder }}"\
             class="{{ attrs.inputclass }}"\
             id="{{ attrs.inputid }}"\
+            autocomplete="off"\
             name="{{ attrs.inputname }}"\
             ng-required="{{ autocompleteRequired }}" />\
           <ul class="autocomplete" ng-show="completing && (suggestions | filter:searchFilter).length > 0">\

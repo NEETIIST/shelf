@@ -2,6 +2,14 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
 
 
 
+    var Document = $resource('/api/user/docs');
+    Document.query(function (results) {
+        $scope.uploaded = results;
+    });
+    $scope.uploaded = [];
+
+
+
 
     var Course = $resource('/api/leti/courses');
     Course.query(function (results) {
@@ -10,6 +18,13 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
         }
     });
     $scope.courses = [];
+
+    var Type = $resource('/api/leti/types');
+    Type.query(function (results) {
+        $scope.types=results;
+    });
+    $scope.types = [];
+
 
     $scope.doc=[];
     $scope.doc.course="";
@@ -20,9 +35,20 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
             Teacher.query(function (results) {
                 $scope.teachers=results;
             });
+            var Tag = $resource('/api/'+$scope.doc.course+'/tags');
+            Tag.query(function (results) {
+                tags = [];
+                for(var i=0; i<results.length; i++){
+                    obj = {text: results[i]};
+                    tags.push(obj);
+                }
+                $scope.tags=tags;
+            });
         }
     });
     $scope.teachers = [];
+    $scope.tags = [];
+
 
     $scope.uploadFiles = function(files, errFiles) {
         if(!files){ return; }

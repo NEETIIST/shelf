@@ -32,12 +32,16 @@ app.use('/js', express.static(__dirname + '/client/js'));
 app.use('/views', express.static(__dirname + '/client/views'));
 app.use('/css', express.static(__dirname + '/client/css'));
 app.use('/images', express.static(__dirname + '/client/images'));
+app.use('/content', express.static(__dirname + '/content'));
 
 
 // REST API
 var rest = require("./server/api");
 app.get('/api/degrees', isLoggedIn, rest.degrees);
-app.get('/api/:degree/courses', isLoggedIn, rest.courses);
+app.get('/api/user/courses', isLoggedIn, rest.courses);
+app.get('/api/user/docs', isLoggedIn, rest.userDocs);
+app.get('/api/:degree/courses', isLoggedIn, rest.degreeCourses);
+app.get('/api/:degree/types', isLoggedIn, rest.degreeTypes);
 app.get('/api/:course/docs', isLoggedIn, rest.docs);
 app.get('/api/:course/docteachers', isLoggedIn, rest.doc_teachers);
 app.get('/api/:course/teachers', isLoggedIn, rest.teachers);

@@ -85,6 +85,8 @@ module.exports = function(app) {
 
 	app.post('/api/:course/docs', isLoggedIn, function(req,res){
 
+		console.log(req.body);
+
 		
 		Upload.findOne({session: req.body.session},function(err,obj){
 
@@ -95,6 +97,10 @@ module.exports = function(app) {
 					local : obj.files[i]
 				});
 			}
+			var tags = [];
+			for(var k=0; k<req.body.tags; k++){
+				tags.push(req.body.tags[i].text);
+			}
 
 			var document = new Document({
 				name: 			req.body.name,
@@ -103,7 +109,7 @@ module.exports = function(app) {
 				teacher: 		req.body.teacher,
 				course: 		req.body.course,
 				academicTerm: 	req.body.academicTerm,
-				tags: 			req.body.tags,
+				tags: 			tags,
 				approved: 		false,
 				content: 		content
 			});

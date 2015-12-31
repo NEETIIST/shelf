@@ -17,15 +17,22 @@
     <p><a class="btn btn-primary" href="javascript:document.getElementById('intro').remove();" role="button">Fechar</a></p>
 </div>
 
-<ul class="list-group cadeira">
-    <a ng-repeat="course in courses | orderBy:'name'" class="list-group-item" ng-href="/course/{{course.acronym}}">
+<ul class="list-group cadeira" ng-hide="otherCourses">
+    <a ng-repeat="course in courses | orderBy:'name'" class="list-group-item" ng-href="#/course/{{course.acronym}}">
         <span class="label label-primary">{{course.acronym}}</span>
         {{course.name}}
     </a>
 </ul>
 
- <ul class="list-group">
-    <a class="list-group-item">
+<ul class="list-group" ng-hide="otherCourses">
+    <a ng-click="otherCourses=true" class="list-group-item">
         Outras cadeiras
+    </a>
+</ul>
+
+<ul class="list-group cadeira" ng-show="otherCourses">
+    <a ng-repeat="course in degreeCourses | orderBy:'name'" class="list-group-item" ng-href="#/course/{{course.acronym}}">
+        <span class="label label-primary">{{course.acronym}}</span>
+        {{course.name}}
     </a>
 </ul>	

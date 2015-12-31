@@ -13,6 +13,38 @@ Array.prototype.unique = function() {
     return r;
 };
 
+function asyncLoop(iterations, func, callback) {
+    var index = 0;
+    var done = false;
+    var loop = {
+        next: function() {
+            if (done) {
+                return;
+            }
+
+            if (index < iterations) {
+                index++;
+                func(loop);
+
+            } else {
+                done = true;
+                callback();
+            }
+        },
+
+        iteration: function() {
+            return index - 1;
+        },
+
+        break: function() {
+            done = true;
+            callback();
+        }
+    };
+    loop.next();
+    return loop;
+}
+
 
 module.exports.degrees  = function(req,res) {
   Degree.find({ }, 
@@ -29,7 +61,6 @@ module.exports.courses  = function(req,res) {
 
       fenix.courses(req.user.accessToken,function(err,tmp){
           var courses = [];
-          console.log(req.user);
           for(i=0; i<results.length; i++){
             if(tmp.indexOf(results[i].name) != -1){
               courses.push(results[i])
@@ -42,17 +73,70 @@ module.exports.courses  = function(req,res) {
   );
 };
 
-module.exports.docs   = function(req,res) {
-  Document.find({ course: req.params.course, aproved: true }, 
+
+module.exports.degreeTypes  = function(req,res){
+
+    Document.find({approved: true }, 
     function (err, results) {
-        console.log(results);
+        var rtypes = [];
+        for(i=0; i<results.length; i++){
+          if(results[i].type!=undefined)
+            rtypes.push(results[i].type)
+        }
+        rtypes.unique();
+        res.json(rtypes);
+      }
+    );
+};
+
+module.exports.degreeCourses  = function(req,res){
+
+    Course.find({}, function (err, courses) {
+
+      var results = [];
+
+      asyncLoop(courses.length,function(loop){
+        Degree.find({acronym: req.params.degree.toUpperCase()}, function (err, degrees) {
+
+          degree=degrees[0];
+
+          if(degree){
+          
+
+          if(degree.courses.indexOf(courses[loop.iteration()].acronym) != -1){
+            results.push(courses[loop.iteration()]);
+          }
+          }
+          loop.next();
+        });
+        
+          
+        },function(){
+          res.json(results);
+        });
+      });
+
+
+};
+
+module.exports.docs   = function(req,res) {
+  Document.find({ course: req.params.course, approved: true }, 
+    function (err, results) {
+        res.json(results);
+      }
+    );
+};
+
+module.exports.userDocs   = function(req,res) {
+  Document.find({ uploader: req.user.username }, 
+    function (err, results) {
         res.json(results);
       }
     );
 };
 
 module.exports.doc_teachers   = function(req,res) {
-  Document.find({ course: req.params.course, aproved: true }, 
+  Document.find({ course: req.params.course, approved: true }, 
     function (err, results) {
         teachers = [];
         for(i=0; i<results.length; i++){
@@ -68,7 +152,6 @@ module.exports.teachers   = function(req,res) {
     function (err, results) {
         if(results){
             if(results.length>0){
-              console.log(results);
               res.json(results[0].teachers);
             }
         }
@@ -77,19 +160,20 @@ module.exports.teachers   = function(req,res) {
 };
 
 module.exports.tags   = function(req,res) {
-  Document.find({ course: req.params.course, aproved: true }, 
+  Document.find({ course: req.params.course, approved: true }, 
     function (err, results) {
         tags = [];
         for(i=0; i<results.length; i++){
           tags = tags.concat(results[i].tags).unique();
         }
+        console.log(tags);
         res.json(tags);
       }
     );
 };
 
 module.exports.types   = function(req,res) {
-  Document.find({ course: req.params.course, aproved: true }, 
+  Document.find({ course: req.params.course, approved: true }, 
     function (err, results) {
         types = [];
         for(i=0; i<results.length; i++){
@@ -102,7 +186,7 @@ module.exports.types   = function(req,res) {
 };
 
 module.exports.academicTerms   = function(req,res) {
-  Document.find({ course: req.params.course, aproved: true }, 
+  Document.find({ course: req.params.course, approved: true }, 
     function (err, results) {
         terms = [];
         for(i=0; i<results.length; i++){
