@@ -10,5 +10,10 @@ module.exports = mongoose.model('Document', {
 	academicTerm: 	String,
 	tags: 			[String],
 	approved: 		Boolean,
-	content: 		[String]
+	content: 		[{
+		meocloud: 	String,
+		drive: 		String, 
+		dropbox: 	String,
+		local: 		String
+	}]
 });

@@ -5,7 +5,6 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 		// Title
 		$scope.title = $routeParams.course;
 
-
 		// Document
 		var Document = $resource('/api/'+$routeParams.course+'/docs');
 		Document.query(function (results) {

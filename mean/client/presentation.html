@@ -26,7 +26,7 @@ overflow: hidden;
 }
 
 .panel {
-   background-color: rgba(245, 245, 245, 0.4);
+   background-color: rgba(7, 41, 63, 0);
    border: none;
 }
 
@@ -38,16 +38,30 @@ overflow: hidden;
   align-items: center;
 }
 
+.layer {
+    background-color: rgba(7, 41, 63, 0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 </style>
 <body>
 
 <div class="container">
 
+    <div class="background">
+        <div class="layer">
+        </div>
+    </div>
+
     <div class="col-md-6 col-md-push-3 text-center vertical-center"> 
 		<div class="panel panel-default">
   		<div class="panel-body">
-  		<img class="img-responsive" src="images/logo.png"> <br>
-    	<a href="/auth/fenix" class="btn btn-primary btn-lg">Log In com o Fenix</a>
+  		<img class="img-responsive" src="images/presentationlogo.png"> <br>
+    	<a href="/auth/fenix" class="btn btn-default btn-lg">Log In com o Fenix</a>
   		</div>
 		</div>
 	</div>

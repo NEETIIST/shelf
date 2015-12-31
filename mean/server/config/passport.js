@@ -1,6 +1,6 @@
 
 var OAuth2  = require("passport-oauth2").Strategy,
-    fenix   = require("./fenix"),
+    fenix   = require("../services/fenix"),
     User    = require("../models/user");
 
 module.exports = function(passport){
@@ -54,9 +54,7 @@ module.exports = function(passport){
                     return done(null, user);
                 }
                 else {
-                    
-                    console.log({access_token:accessToken,refresh_token: refreshToken, profile: profile});
-                    
+                            
                     User.create({
                         username : profile.username,
                         accessToken : accessToken,

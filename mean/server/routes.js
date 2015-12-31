@@ -20,6 +20,9 @@ module.exports = function(app,passport){
 
 	app.get('/auth/fenix',passport.authenticate('oauth2'));
 
+	app.get('/auth/google/callback',function(req,res){
+		res.send(req.query.code);
+	});
 	app.get('/auth/fenix/callback',
 	    passport.authenticate('oauth2', { failureRedirect: '/login' }),
 	    	function(req, res) {

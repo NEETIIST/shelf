@@ -43,6 +43,7 @@ app.get('/api/:course/teachers', isLoggedIn, rest.teachers);
 app.get('/api/:course/tags', isLoggedIn, rest.tags);
 app.get('/api/:course/types', isLoggedIn, rest.types);
 app.get('/api/:course/terms', isLoggedIn, rest.academicTerms);
+require('./server/controllers/upload')(app);
 
 
 

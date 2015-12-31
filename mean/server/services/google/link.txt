@@ -1,1 +1,1 @@
-https://accounts.google.com/o/oauth2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&response_type=code&client_id=447918343020-v6nna41qs6lon9s58sfkruq1hid9j1h8.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Fshelf.n1z.pt%2Fauth%2Fgoogle%2Fcallback
+cona da mae
