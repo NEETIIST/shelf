@@ -89,9 +89,10 @@ module.exports = function(app) {
 		Upload.findOne({session: req.body.session},function(err,obj){
 
 			var content = [];
-			for(file in obj.files){
+			for(var i=0; i<obj.files.length; i++){
+
 				content.push({
-					local : file
+					local : obj.files[i]
 				});
 			}
 
@@ -99,7 +100,7 @@ module.exports = function(app) {
 				name: 			req.body.name,
 				uploader: 		req.user.username,
 				type: 			req.body.type,
-				teachers: 		req.body.teachers,
+				teacher: 		req.body.teacher,
 				course: 		req.body.course,
 				academicTerm: 	req.body.academicTerm,
 				tags: 			req.body.tags,

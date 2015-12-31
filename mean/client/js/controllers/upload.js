@@ -1,14 +1,28 @@
 app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($scope, Upload, $timeout, $resource) {
 
-    $scope.courses = [
-        "Arquitecturas de Redes",
-        "Gestão"
-    ];
 
-    $scope.teachers = [
-        "João Pedro Pereira Boavida",
-        "Júlio Paisana"
-    ];
+
+
+    var Course = $resource('/api/leti/courses');
+    Course.query(function (results) {
+        for(var i=0; i<results.length; i++){
+            $scope.courses.push(results[i].acronym);
+        }
+    });
+    $scope.courses = [];
+
+    $scope.doc=[];
+    $scope.doc.course="";
+
+    $scope.$watch('doc.course', function() {
+        if($scope.doc.course!=""){
+            var Teacher = $resource('/api/'+$scope.doc.course+'/teachers');
+            Teacher.query(function (results) {
+                $scope.teachers=results;
+            });
+        }
+    });
+    $scope.teachers = [];
 
     $scope.uploadFiles = function(files, errFiles) {
         if(!files){ return; }

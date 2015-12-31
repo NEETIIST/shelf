@@ -70,7 +70,7 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 
 
 		// Teacher
-		var Teacher = $resource('/api/'+$routeParams.course+'/teachers');
+		var Teacher = $resource('/api/'+$routeParams.course+'/docteachers');
 		Teacher.query(function (results) {
 			$scope.teachers = results;
 		});

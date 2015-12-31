@@ -1,20 +1,13 @@
-var ROOTFOLDER = "0B-je9j5AlDQSN1hESldTdENHQ0E";
 var google = require('googleapis');
  var fs = require('fs');
 var service = google.drive('v2');
 var Drive = require("./functions");
-var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2("447918343020-v6nna41qs6lon9s58sfkruq1hid9j1h8.apps.googleusercontent.com", 
-                "30Fm8I1-JPMhI2Yb8x3XSquT", 
-                "http://shelf.n1z.pt/auth/google/callback");
 
-oauth2Client.setCredentials({
-  access_token: 'ya29.WwLjn9R1F1I6CajJwvdGjk0z_iY2ybx5uwBo0F-wgJ9c0wamK72nyJqctWoiFEDcE20PPA'
-  
-});
+
+
 
 //////////functions/////////////////////////////////////////////////
-listChildFiles = function (auth,parents,done) {
+exports.listChildFiles = function (auth,parents,done) {
  
   service.children.list({
     auth: auth,
@@ -31,12 +24,12 @@ listChildFiles = function (auth,parents,done) {
       console.log('No files found.');
       return done(null,files);
     } else {
-      
+      console.log('Files:');
       for (var i = 0; i < files.length; i++) {
         var file = files[i];
         
       }
-      listFiles(auth,files, function(err, fileschild){
+      Drive.listFiles(auth,files, function(err, fileschild){
 
 
         return done(null,fileschild );
@@ -48,7 +41,7 @@ listChildFiles = function (auth,parents,done) {
 }
 
 //////////functions/////////////////////////////////////////////////
-listFiles = function (auth,childsID,done) {
+exports.listFiles = function (auth,childsID,done) {
 
  fileschild=[];
   service.files.list({
@@ -66,7 +59,7 @@ listFiles = function (auth,childsID,done) {
       console.log('No files found.');
       return done(null, files);
     } else {
-      
+      console.log('Files:');
       for (var i = 0; i < childsID.length; i++) {
         for (var p = 0; p < files.length; p++) {
          
@@ -85,10 +78,10 @@ listFiles = function (auth,childsID,done) {
 }
 
 
-folder=function(auth,course,term,done){
+exports.folder=function(auth,course,term,done){
   var paternsId=0;
  
-  listChildFiles(auth,ROOTFOLDER, function(err, filesCourses){
+  Drive.listChildFiles(auth,"0B-je9j5AlDQSN1hESldTdENHQ0E", function(err, filesCourses){
     var filesCoursesName=[];
   
 
@@ -105,7 +98,7 @@ folder=function(auth,course,term,done){
          
       }
 
-      listChildFiles(auth,paternsId, function(err, filesTerms){
+      Drive.listChildFiles(auth,paternsId, function(err, filesTerms){
         var filesTermsName=[];
 
         for (var i = 0; i < filesTerms.length; i++) {
@@ -124,7 +117,7 @@ folder=function(auth,course,term,done){
            
 
           } else {
-            createFolder(term,auth,paternsId, function(err, id){
+            Drive.createFolder(term,auth,paternsId, function(err, id){
              
               return done(null,id );
             })
@@ -133,8 +126,8 @@ folder=function(auth,course,term,done){
     })
    
     } else {
-      createFolder(course,auth,ROOTFOLDER, function(err, id){
-         createFolder(term,auth,id, function(err, termId){
+      Drive.createFolder(course,auth,"0B-je9j5AlDQSN1hESldTdENHQ0E", function(err, id){
+         Drive.createFolder(term,auth,id, function(err, termId){
             return done(null,termId );
           })
       })
@@ -148,7 +141,7 @@ folder=function(auth,course,term,done){
 
 
 
-createFolder =function (title,auth,parents,done){
+exports.createFolder =function (title,auth,parents,done){
   
   service.files.insert({
     auth: auth,
@@ -162,14 +155,14 @@ createFolder =function (title,auth,parents,done){
         console.log('error at gdrive create folder: ' + err);
     }else{
         
-       
+        console.log('create response: ' + response.id);
         return done(null,response.id);
     }
 });
 }
 
 
-createFile =function (title,auth,parents,done){
+exports.createFile =function (title,auth,parents,done){
  
 
 
@@ -182,43 +175,32 @@ createFile =function (title,auth,parents,done){
     },
     media: {
       
-      body: fs.createReadStream(title) 
+      body: fs.createReadStream(title) // read streams are awesome!
     }
-  }, function(err,response){
-    done(null,response.id);
-  });  
+  }, done);  
    
 }
 
 
-exports.insert =function (file,course,term,done){
+exports.insert =function (auth,file,course,term,done){
 
-  folder(oauth2Client,course,term,function(err,id){
-    createFile(file,oauth2Client,id,function(err,fileID){
-      done(null,"https://drive.google.com/open?id="+fileID)
+  Drive.folder(auth,course,term,function(err,id){
+    Drive.createFile(file,auth,id,function(err,done){
     })
 
-  })   
+  })
+ 
+
+
+  
+   
 }
 
-Drive.insert("functions.js","ist","neeti",function(err,argument) {
-    console.log(argument);
-    })
 
 
 
 
 
-
-
-/****************refresh token**********************
-
-oauth2Client.refreshAccessToken(function(err, tokens) {
-  // your access_token is now refreshed and stored in oauth2Client
-  // store these new tokens in a safe place (e.g. database)
-});
-
-*****************************************************************************/
 
 
 

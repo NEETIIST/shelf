@@ -36,20 +36,37 @@ module.exports.courses = function(token,callback){
 module.exports.coursesByDegree = function(degree, academicTerm,callback){
 	request('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/degrees/'+degree+'/courses?academicTerm='+academicTerm, 
 	function (err, res, body) {
-		
-		callback(err,JSON.parse(body));
+
+		if(body){
+			result = JSON.parse(body);
+			if(result){
+				callback(err,result);
+			}else{
+				callback(err,[]);
+			}
+			
+		}else{
+			callback(err,[]);
+		}
   	
   	});
 };
 
-module.exports.teachersByCourse = function(course,callback){
+module.exports.teachersByCourse = function(course,cn,callback){
 	request('https://fenix.tecnico.ulisboa.pt/api/fenix/v1/courses/'+course, 
 	function (err, res, body) {
 
-		result = JSON.parse(body);
-		
-		callback(err,result.teachers);
-  	
+		if(body){
+			result = JSON.parse(body);
+			if(result){
+				callback(err,result.teachers,cn);
+			}else{
+				callback(err,[],cn);
+			}
+		}
+		else{
+			callback(err,[],cn);
+		}
   	});
 };
 

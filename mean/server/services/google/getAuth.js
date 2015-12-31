@@ -21,7 +21,7 @@ console.log("URL: "+url);
 //get code from url and copy to json
 */
 
-var code= '4/_53MVg6zvZ6CD30cTfTXSarfcUozD2roVbSnfdZYsgc';
+var code= '4/9AedYRCji7xIj-aAJsxSApeuWzIV3hb7dube7aqozOI';
 
 
 oauth2Client.getToken(code, function(err, tokens){
@@ -30,14 +30,7 @@ oauth2Client.getToken(code, function(err, tokens){
     console.log(tokens);
     //get the tokens to json
     oauth2Client.setCredentials(tokens);
-    
-    //*Drive.folder(oauth2Client,"Arquitectura de redes","Valadas",function(err,argument) {
-      
-    
-
-  Drive.createFile("cona",oauth2Client,"Valadas",function(err,argument) {
-  })
-       
+        
   }
 });
 
@@ -45,27 +38,8 @@ oauth2Client.getToken(code, function(err, tokens){
 
 
 
-/****************colocar esta situação no server.js**********************
 
-var google = require('googleapis');
-var OAuth2 = google.auth.OAuth2;
-var oauth2Client = new OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 
-oauth2Client.setCredentials({
-  access_token: 'ACCESS TOKEN HERE',
-  refresh_token: 'REFRESH TOKEN HERE'
-});
-
-*****************************************************************************/
-
-/****************refresh token**********************
-
-oauth2Client.refreshAccessToken(function(err, tokens) {
-  // your access_token is now refreshed and stored in oauth2Client
-  // store these new tokens in a safe place (e.g. database)
-});
-
-*****************************************************************************/
 
 
 

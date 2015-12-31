@@ -39,6 +39,7 @@ var rest = require("./server/api");
 app.get('/api/degrees', isLoggedIn, rest.degrees);
 app.get('/api/:degree/courses', isLoggedIn, rest.courses);
 app.get('/api/:course/docs', isLoggedIn, rest.docs);
+app.get('/api/:course/docteachers', isLoggedIn, rest.doc_teachers);
 app.get('/api/:course/teachers', isLoggedIn, rest.teachers);
 app.get('/api/:course/tags', isLoggedIn, rest.tags);
 app.get('/api/:course/types', isLoggedIn, rest.types);

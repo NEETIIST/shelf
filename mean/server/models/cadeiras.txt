@@ -1,0 +1,94 @@
+1ºano
+1SEMESTRE
+
+db.courses.insert({name:"Álgebra Linear", acronym:"AL",year:1,semester:1})
+db.courses.insert({name:"Cálculo Diferencial e Integral I", acronym:"CDI1",year:1,semester:1})
+db.courses.insert({name:"Elementos de Matemática Discreta", acronym:"EMD",year:1,semester:1})
+db.courses.insert({name:"Fundamentos da Programação", acronym:"FP",year:1,semester:1})
+db.courses.insert({name:"Sistemas Digitais", acronym:"SD",year:1,semester:1})
+
+2SEMESTRE
+
+db.courses.insert({name:"Arquitectura de Computadores", acronym:"AC",year:1,semester:2})
+db.courses.insert({name:"Cálculo Diferencial e Integral II", acronym:"CDI2",year:1,semester:2})
+db.courses.insert({name:"Introdução à Engenharia de Telecomunicações e Informática", acronym:"IETI",year:1,semester:2})
+db.courses.insert({name:"Introdução aos Algoritmos e Estruturas de Dados", acronym:"IAED",year:1,semester:2})
+db.courses.insert({name:"Mecânica e Ondas", acronym:"MO",year:1,semester:2})
+
+
+
+
+
+
+2ºano
+1SEMESTRE
+
+db.courses.insert({name:"Análise Complexa e Equações Diferenciais", acronym:"ACED",year:2,semester:1})
+db.courses.insert({name:"Electromagnetismo e Óptica", acronym:"EO",year:2,semester:1})
+db.courses.insert({name:"Matemática Computacional", acronym:"MC",year:2,semester:1})
+db.courses.insert({name:"Programação com Objectos", acronym:"PO",year:2,semester:1})
+db.courses.insert({name:"Sistemas Operativos", acronym:"SO",year:2,semester:1})
+
+2SEMESTRE
+
+db.courses.insert({name:"Introdução às Interfaces Pessoa-Máquina", acronym:"IIPM",year:2,semester:2})
+db.courses.insert({name:"Introdução às Redes de Computadores", acronym:"IRC",year:2,semester:2})
+db.courses.insert({name:"Probabilidades e Estatística", acronym:"PE",year:2,semester:2})
+db.courses.insert({name:"Sistemas Distribuídos", acronym:"SDis",year:2,semester:2})
+db.courses.insert({name:"Sistemas e Sinais", acronym:"SS",year:2,semester:2})
+
+
+
+3ºANO
+1SEMESTRE
+
+db.courses.insert({name:"Arquitecturas de Redes", acronym:"AR",year:3,semester:1})
+db.courses.insert({name:"Bases de Dados", acronym:"BD",year:3,semester:1})
+db.courses.insert({name:"Gestão", acronym:"Ges",year:3,semester:1})
+db.courses.insert({name:"Introdução aos Circuitos e Sistemas Electrónicos", acronym:"ICSE",year:3,semester:1})
+db.courses.insert({name:"Propagação e Antenas", acronym:"PA",year:3,semester:1})
+
+
+2SEMESTRE
+
+db.courses.insert({name:"Electrónica dos Sistemas Embebidos", acronym:"ESEmb",year:3,semester:2})
+db.courses.insert({name:"Engenharia de Software", acronym:"ES",year:3,semester:2})
+db.courses.insert({name:"Portfolio Pessoal A", acronym:"PPess",year:3,semester:2})
+db.courses.insert({name:"Gestão e Segurança de Redes / Gestão de Redes e Serviços", acronym:"GSR",year:3,semester:2})
+db.courses.insert({name:"Gestão e Segurança de Redes", acronym:"GSR",year:3,semester:2})
+db.courses.insert({name:"Sistemas de Comunicações", acronym:"SCom",year:3,semester:2})
+
+terminal:
+
+db.courses.insert({name:"Álgebra Linear", acronym:"AL",year:1,semester:1})
+db.courses.insert({name:"Cálculo Diferencial e Integral I", acronym:"CDI1",year:1,semester:1})
+db.courses.insert({name:"Elementos de Matemática Discreta", acronym:"EMD",year:1,semester:1})
+db.courses.insert({name:"Fundamentos da Programação", acronym:"FP",year:1,semester:1})
+db.courses.insert({name:"Sistemas Digitais", acronym:"SD",year:1,semester:1})
+db.courses.insert({name:"Arquitectura de Computadores", acronym:"AC",year:1,semester:2})
+db.courses.insert({name:"Cálculo Diferencial e Integral II", acronym:"CDI2",year:1,semester:2})
+db.courses.insert({name:"Introdução à Engenharia de Telecomunicações e Informática", acronym:"IETI",year:1,semester:2})
+db.courses.insert({name:"Introdução aos Algoritmos e Estruturas de Dados", acronym:"IAED",year:1,semester:2})
+db.courses.insert({name:"Mecânica e Ondas", acronym:"MO",year:1,semester:2})
+db.courses.insert({name:"Análise Complexa e Equações Diferenciais", acronym:"ACED",year:2,semester:1})
+db.courses.insert({name:"Electromagnetismo e Óptica", acronym:"EO",year:2,semester:1})
+db.courses.insert({name:"Matemática Computacional", acronym:"MC",year:2,semester:1})
+db.courses.insert({name:"Programação com Objectos", acronym:"PO",year:2,semester:1})
+db.courses.insert({name:"Sistemas Operativos", acronym:"SO",year:2,semester:1})
+db.courses.insert({name:"Introdução às Interfaces Pessoa-Máquina", acronym:"IIPM",year:2,semester:2})
+db.courses.insert({name:"Introdução às Redes de Computadores", acronym:"IRC",year:2,semester:2})
+db.courses.insert({name:"Probabilidades e Estatística", acronym:"PE",year:2,semester:2})
+db.courses.insert({name:"Sistemas Distribuídos", acronym:"SDis",year:2,semester:2})
+db.courses.insert({name:"Sistemas e Sinais", acronym:"SS",year:2,semester:2})
+db.courses.insert({name:"Arquitecturas de Redes", acronym:"AR",year:3,semester:1})
+db.courses.insert({name:"Bases de Dados", acronym:"BD",year:3,semester:1})
+db.courses.insert({name:"Gestão", acronym:"Ges",year:3,semester:1})
+db.courses.insert({name:"Introdução aos Circuitos e Sistemas Electrónicos", acronym:"ICSE",year:3,semester:1})
+db.courses.insert({name:"Propagação e Antenas", acronym:"PA",year:3,semester:1})
+db.courses.insert({name:"Electrónica dos Sistemas Embebidos", acronym:"ESEmb",year:3,semester:2})
+db.courses.insert({name:"Engenharia de Software", acronym:"ES",year:3,semester:2})
+db.courses.insert({name:"Portfolio Pessoal A", acronym:"PPess",year:3,semester:2})
+db.courses.insert({name:"Gestão e Segurança de Redes / Gestão de Redes e Serviços", acronym:"GSR",year:3,semester:2})
+db.courses.insert({name:"Gestão e Segurança de Redes", acronym:"GSR",year:3,semester:2})
+db.courses.insert({name:"Sistemas de Comunicações", acronym:"SCom",year:3,semester:2})
+

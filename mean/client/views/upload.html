@@ -54,19 +54,19 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teachers">Professor</label>
-
-                            <autocomplete type="text" inputclass="form-control" data="teachers" name="course" placeholder="Ex: João Pedro Pereira Boavida" ng-model="doc.teacher" required></autocomplete>
-
-                            <span class="text-warning" ng-show="uploadForm.teachers.$error.required">Obrigatório!</span>
+                        <label for="course">Cadeira</label>
+                            <autocomplete inputrequired="required" inputname="course" type="text" inputclass="form-control" data="courses" name="course" placeholder="Ex: Gestão" ng-model="doc.course"></autocomplete>
+                            <span class="text-warning" ng-show="uploadForm.course.$error.required">Obrigatório!</span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                        <label for="course">Cadeira</label>
-                            <autocomplete type="text" inputclass="form-control" data="courses" name="course" placeholder="Ex: Gestão" ng-model="doc.course" required></autocomplete>
-                            <span class="text-warning" ng-show="uploadForm.course.$error.required">Obrigatório!</span>
+                            <label for="teachers">Professor</label>
+
+                            <autocomplete inputname="teacher" type="text" inputclass="form-control" data="teachers" name="course" placeholder="Ex: João Pedro Pereira Boavida" ng-model="doc.teacher"></autocomplete>
+
+                            <span class="text-warning" ng-show="uploadForm.teachers.$error.required">Obrigatório!</span>
                         </div>
                     </div>
 

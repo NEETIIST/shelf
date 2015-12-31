@@ -1,6 +1,6 @@
 
 var OAuth2  = require("passport-oauth2").Strategy,
-    fenix   = require("../services/fenix"),
+    fenix   = require("../services/fenix/fenix"),
     User    = require("../models/user");
 
 module.exports = function(passport){

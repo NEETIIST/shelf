@@ -244,10 +244,12 @@ app.directive('autocomplete', function() {
         <div class="autocomplete {{ attrs.class }}" id="{{ attrs.id }}">\
           <input\
             type="text"\
+             {{attrs.inputrequired}} \
             ng-model="searchParam"\
             placeholder="{{ attrs.placeholder }}"\
             class="{{ attrs.inputclass }}"\
             id="{{ attrs.inputid }}"\
+            name="{{ attrs.inputname }}"\
             ng-required="{{ autocompleteRequired }}" />\
           <ul class="autocomplete" ng-show="completing && (suggestions | filter:searchFilter).length > 0">\
             <li\

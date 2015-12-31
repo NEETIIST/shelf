@@ -1,9 +1,9 @@
 
-var Degree		= require("./models/degree");
-var Course		= require("./models/course");
-var Document	= require("./models/document");
+var Degree    = require("./models/degree");
+var Course    = require("./models/course");
+var Document  = require("./models/document");
 
-var fenix = require("./config/fenix");
+var fenix = require("./services/fenix/fenix");
 
 
 Array.prototype.unique = function() {    
@@ -14,18 +14,18 @@ Array.prototype.unique = function() {
 };
 
 
-module.exports.degrees 	= function(req,res) {
-	Degree.find({ }, 
-		function (err, results) {
-    		res.json(results);
-  		}
-  	);
+module.exports.degrees  = function(req,res) {
+  Degree.find({ }, 
+    function (err, results) {
+        res.json(results);
+      }
+    );
 };
 
-module.exports.courses	= function(req,res) {
+module.exports.courses  = function(req,res) {
 
-	Course.find({}, 
-		function (err, results) {
+  Course.find({}, 
+    function (err, results) {
 
       fenix.courses(req.user.accessToken,function(err,tmp){
           var courses = [];
@@ -38,20 +38,20 @@ module.exports.courses	= function(req,res) {
         res.json(courses);
 
       });
-  	}
+    }
   );
 };
 
-module.exports.docs		= function(req,res) {
-	Document.find({ course: req.params.course, aproved: true }, 
-		function (err, results) {
+module.exports.docs   = function(req,res) {
+  Document.find({ course: req.params.course, aproved: true }, 
+    function (err, results) {
         console.log(results);
-    		res.json(results);
-  		}
-  	);
+        res.json(results);
+      }
+    );
 };
 
-module.exports.teachers   = function(req,res) {
+module.exports.doc_teachers   = function(req,res) {
   Document.find({ course: req.params.course, aproved: true }, 
     function (err, results) {
         teachers = [];
@@ -59,6 +59,19 @@ module.exports.teachers   = function(req,res) {
           teachers = teachers.concat(results[i].teachers).unique();
         }
         res.json(teachers);
+      }
+    );
+};
+
+module.exports.teachers   = function(req,res) {
+  Course.find({ acronym: req.params.course }, 
+    function (err, results) {
+        if(results){
+            if(results.length>0){
+              console.log(results);
+              res.json(results[0].teachers);
+            }
+        }
       }
     );
 };
