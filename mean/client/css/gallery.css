@@ -1,0 +1,35 @@
+#simple-gallery{
+  height:100%;
+}
+#simple-gallery .pimage{
+  max-height: calc(100% - 50px);
+}
+
+#simple-gallery .image img{
+  max-height:100%; 
+  max-width:100%;
+}
+
+#slider-thumbs {
+  position: absolute;
+  bottom: 0px;
+}
+
+#slider-thumbs ul > li {
+  display: inline-block;
+  padding: 0.25em;
+}
+#slider-thumbs ul{
+  padding: 0;
+  margin: 0 auto;
+  display:inline-block;
+}
+
+#slider-thumbs{
+  text-align: center;
+}
+
+.simple-gallery-thumbnail {
+  height: 40px;
+  width: 40px;
+}

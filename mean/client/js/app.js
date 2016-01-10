@@ -12,10 +12,19 @@ app.config(function($routeProvider, $httpProvider) {
             templateUrl: 'views/upload.html',
             controller: 'upload'
         })
+        .when('/report', {
+            templateUrl: 'views/report.html',
+            controller: 'report'
+        })
+        .when('/admin', {
+            templateUrl: 'views/admin.html',
+            controller: 'admin'
+        })
         .when('/', {
             templateUrl: 'views/courses.html',
             controller: 'courses'
         }) 
+        
         .otherwise({ redirectTo: '/'});
 
 });

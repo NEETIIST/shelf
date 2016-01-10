@@ -7,16 +7,9 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
         $scope.uploaded = results;
     });
     $scope.uploaded = [];
-    $scope.terms = [];
-    var date = new Date();
-    for (var i = 2006; i<date.getFullYear(); i++){
 
-         $scope.terms.push("1º semester "+i.toString()+"/"+(i+1).toString());
-         $scope.terms.push("2º semester "+i.toString()+"/"+(i+1).toString());
-    }
 
-    
-    
+
 
     var Course = $resource('/api/leti/courses');
     Course.query(function (results) {
@@ -94,26 +87,11 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
 
     $scope.submit = function (data){
 
-        
-        if ($scope.files.length==0){
-            $scope.upload_incomplete=false;
-            $scope.no_files=true;
-            $timeout(function() {  $scope.no_files=false; $scope.upload_incomplete=true; }, 4000);
-            return
-        }
         for(var i=0; i<$scope.files.length; i++){
             if($scope.files[0].progress!==100){
-            
                 return;
             }
         }
-        if(data.name==null ||data.name=='' || data.type==null ||data.type=='' || data.tags==null ||data.tags=='' || data.course==null ||data.course=='' ){
-            $scope.upload_incomplete=false;
-            $scope.empty_fields=true;
-            $timeout(function() {  $scope.empty_fields=false; $scope.upload_incomplete=true; }, 4000);
-            return;
-        }
-        
 
         course = data.course;
         var Document = $resource('/api/'+course+'/docs');
@@ -124,13 +102,13 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
         for(var i=0; i<data.tags.length; i++){
             tags.push(data.tags[i].text);
         }
-        
+
         var result = {
             name            : data.name,
             academicTerm    : data.academicTerm,
             tags            : tags,
             teacher         : data.teacher,
-            course          : data.course.toUpperCase(),
+            course          : data.course,
             type            : data.type,
             session         : $scope.session
         };

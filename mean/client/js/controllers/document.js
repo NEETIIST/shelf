@@ -102,6 +102,7 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 		$scope.filterTeacher = function(doc) {
 			if($scope.selected.teachers.length==0)
 				return true;
+			if(!doc.teachers) return false; 
 			for (var i = 0; i < doc.teachers.length; i++) {
     			if($scope.selected.teachers.indexOf(doc.teachers[i]) != -1)	
     				return true;

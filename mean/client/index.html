@@ -46,9 +46,10 @@
         <div ng-controller="navbar" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
-                <li ng-class="{ active: isActive('/historico')}"><a ng-href="#/history">Histórico</a></li>
+                <!--<li ng-class="{ active: isActive('/historico')}"><a ng-href="#/history">Histórico</a></li>-->
                 <li ng-class="{ active: isActive('/upload')}"><a ng-href="#/upload">Upload</a></li>
                 <li ng-class="{ active: isActive('/report')}"><a ng-href="#/report">Reportar</a></li>
+                <li ng-class="{ active: isActive('/admin')}"><a ng-href="#/admin">Admin</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a ng-href="/logout">Logout</a></li>
@@ -93,6 +94,8 @@
 <script type="text/javascript" src="/js/controllers/upload.js"></script>
 <script type="text/javascript" src="/js/controllers/courses.js"></script>
 <script type="text/javascript" src="/js/controllers/document.js"></script>
+<script type="text/javascript" src="/js/controllers/report.js"></script>
+<script type="text/javascript" src="/js/controllers/admin.js"></script>
 
 <script type="text/javascript" src="/js/directives/autocomplete.js"></script>
 

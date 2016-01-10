@@ -248,6 +248,7 @@ app.directive('autocomplete', function() {
             ng-model="searchParam"\
             placeholder="{{ attrs.placeholder }}"\
             class="{{ attrs.inputclass }}"\
+            maxlength="{{ attrs.maxlength }}"\
             id="{{ attrs.inputid }}"\
             autocomplete="off"\
             name="{{ attrs.inputname }}"\

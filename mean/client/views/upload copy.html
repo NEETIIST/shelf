@@ -55,7 +55,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="course">Cadeira</label>
-                            <autocomplete ngblur="updateTags()" inputname="course" type="text" inputclass="form-control" data="courses" name="course" placeholder="Ex: ACED" maxlength="5" ng-model="doc.course"></autocomplete>
+                            <autocomplete inputname="course" type="text" inputclass="form-control" data="courses" name="course" placeholder="Ex: ACED" ng-model="doc.course"></autocomplete>
                             <span ng-show="doc.course==null || doc.course=='' " class="text-danger">* Campo obrigatório </span>
                     </div>
 
@@ -90,7 +90,10 @@
                         <div class="form-group">
                             <label for="academicTerm">Semestre</label>
                             <select class="form-control" name="term" ng-model="doc.academicTerm">
-                                <option ng-repeat="term in terms">{{term}}</option>
+                                <option>2015 2º Semestre</option>
+                                <option>2015 1º Semestre</option>
+                                <option>2014 2º Semestre</option>
+                                <option>2014 1º Semestre</option>
                             </select>
                         </div>
                     </div>
@@ -106,13 +109,9 @@
                     <div class="col-md-12">
                         <div class="alert alert-warning" ng-show="upload_incomplete">
                             Espera que os ficheiros sejam enviados para o Shelf e preenche os campos obrigatórios antes de submeter as informações.
-
                         </div>
                          <div class="alert alert-danger" ng-show="empty_fields">
                             Completa os campos obrigatórios.
-                        </div>
-                          <div class="alert alert-danger" ng-show="no_files">
-                            Não há ficheiros carregados.
                         </div>
                     </div>
                 </div>
@@ -133,11 +132,9 @@
         <div class="js-upload-finished">
             <h4>Histórico</h4>
             <div class="list-group"> 
-                <a ng-repeat="doc in uploaded| orderBy:'date' " href="#" class="list-group-item" ng-class="{true:'list-group-item-success',false:'list-group-item-warning'}[doc.approved]">
+                <a ng-repeat="doc in uploaded" href="#" class="list-group-item" ng-class="{true:'list-group-item-success',false:'list-group-item-warning'}[doc.approved]">
                     <span ng-class="{true:'alert-success',false:'alert-warning'}[doc.approved]" class="badge pull-right">{{doc.date}}</span>
                     {{doc.name}}
-
-
                 </a>
             </div>
         </div>
