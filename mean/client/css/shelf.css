@@ -96,9 +96,9 @@ button.btn-default:focus{
 }
 
 
-
+.glyphicon { margin-right:1px;}
 /* star */
-.glyphicon { margin-right:5px;}
+.rating .glyphicon { margin-right:5px;}
 .rating .glyphicon {font-size: 22px;}
 .rating-num { margin-top:0px;font-size: 54px; }
 .progress { margin-bottom: 5px;}
@@ -108,7 +108,7 @@ button.btn-default:focus{
 #stars-existing { font-size: 30px;}
 
 html,body {height:100%;}
-.preview { height:100% !important; }
+.preview { height:100% !important; background: #000 !important; }
 .example { color: #ddd; text-align: center; font-size: 40px; vertical-align: middle; padding-top:35%;}
 
 

@@ -1,14 +1,55 @@
 <div class="row">
-	<div class="col-md-6">
-	        <ul class="list-group">
-    			<a class="list-group-item">Outras cadeiras</a>
-			</ul>
+	<div class="col-md-8">
+		<div class="panel panel-default">
+  			<div class="panel-heading">Lista de ficheiros submetidos</div>
+  			<div class="panel-body list-group">
+  				<a class="list-group-item clearfix" ng-repeat="doc in docs">
+					<span class="glyphicon glyphicon-file"></span> 
+					{{doc.name}} - {{doc.course}}
+					<span class="pull-right">
+					<button class="btn btn-xs btn-success" ng-click=""><span class="glyphicon glyphicon-ok"></span></button>
+					<button class="btn btn-xs btn-danger" ng-click=""><span class="glyphicon glyphicon-trash"></span></button>
+					</span>
+				</a>
+			</div>
+		</div>
 	</div>
 
-	<div class="col-md-6">
-	        <ul class="list-group">
-    			<a class="list-group-item">mais cadeiras</a>
-			</ul>
-	</div>
 
+	<div class="col-md-4">
+
+		<div class="panel panel-default">
+		  	<div class="panel-heading">Report de Bugs</div>
+		  	<div class="panel-body list-group">
+				<a class="list-group-item clearfix" ng-repeat="report in reports">
+					{{report.username}}
+					<span class="pull-right">
+						<button class="btn btn-xs btn-danger" ng-click=""><span class="glyphicon glyphicon-trash"></span></button>
+					</span>
+				</a>
+			</div>
+		</div>
+
+
+		<div class="panel panel-default">
+  			<div class="panel-heading">Admins</div>
+  			<div class="panel-body list-group">
+				<a class="list-group-item clearfix" ng-repeat="admin in admins">
+					{{admin.username}} - {{admin.name}}
+					<span class="pull-right">
+						<button class="btn btn-xs btn-danger" ng-click="submitAdmin(admin,0)"><span class="glyphicon glyphicon-trash"></span></button>
+					</span>
+				</a>
+			</div>
+
+			<div class="panel-body list-group-item">
+				<form novalidate ng-submit="submitAdmin(add,1)" >
+		            <label for="input">Adicionar Admins (Tecnico ID):</label>
+		            <input class="form-control" rows="1" ng-model="add.username" />
+		            <br>
+		            <button type="submit" class="btn btn-primary">Submeter</button>
+		        </form>
+		    </div>
+	    </div>
+	</div>
 </div>

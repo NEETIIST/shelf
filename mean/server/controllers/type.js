@@ -9,7 +9,7 @@ module.exports.getTypesByCourse   = function(req,res) {
         function (err, results) {
             types = [];
             for(i=0; i<results.length; i++){
-                if(results[i].type) types.push(results[i].type)
+                if(results[i].type && types.indexOf(results[i].type)==-1) types.push(results[i].type)
             }
             types.unique();
             console.log(types);
@@ -31,7 +31,7 @@ module.exports.getTypesByDegree  = function(req,res){
         function (err, results) {
             var rtypes = [];
             for(i=0; i<results.length; i++){
-                if(results[i].type!=undefined)
+                if(results[i].type!=undefined && rtypes.indexOf(results[i].type)==-1)
                     rtypes.push(results[i].type)
             }
             rtypes.unique();

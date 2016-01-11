@@ -1,19 +1,34 @@
-app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($scope, Upload, $timeout, $resource) {
+app.controller('upload', ['$scope','Upload', '$timeout','$resource','$route',function($scope, Upload, $timeout, $resource,$route) {
 
     $scope.upload_incomplete=true;
+
+    $scope.new_upload = function(){
+        $route.reload();
+    }
 
     var Document = $resource('/api/user/docs');
     Document.query(function (results) {
         $scope.uploaded = results;
+         $scope.uploaded.reverse();
     });
+
+
     $scope.uploaded = [];
     $scope.terms = [];
     var date = new Date();
     for (var i = 2006; i<date.getFullYear(); i++){
 
-         $scope.terms.push("1º semester "+i.toString()+"/"+(i+1).toString());
-         $scope.terms.push("2º semester "+i.toString()+"/"+(i+1).toString());
+        $scope.terms.push("1º semester "+i.toString()+"/"+(i+1).toString());
+        if (i!=(date.getFullYear()-1) && date.getMonth() >=0  ){
+            $scope.terms.push("2º semester "+i.toString()+"/"+(i+1).toString());
+        }
+        if (i==(date.getFullYear()-1) && date.getMonth() >0  ){
+            $scope.terms.push("2º semester "+i.toString()+"/"+(i+1).toString());
+        }
     }
+
+    $scope.terms.reverse();
+
 
     
     
@@ -21,7 +36,7 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
     var Course = $resource('/api/leti/courses');
     Course.query(function (results) {
         for(var i=0; i<results.length; i++){
-            $scope.courses.push(results[i].acronym);
+            $scope.courses.push(results[i].acronym.toUpperCase());
         }
     });
     $scope.courses = [];
@@ -37,12 +52,13 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
     $scope.doc.course="";
 
     $scope.$watch('doc.course', function() {
-        if($scope.doc.course!=""){
-            var Teacher = $resource('/api/'+$scope.doc.course+'/teachers');
+
+        if($scope.courses.indexOf($scope.doc.course.toUpperCase())>-1){
+            var Teacher = $resource('/api/'+$scope.doc.course.toUpperCase()+'/teachers');
             Teacher.query(function (results) {
                 $scope.teachers=results;
             });
-            var Tag = $resource('/api/'+$scope.doc.course+'/tags');
+            var Tag = $resource('/api/'+$scope.doc.course.toUpperCase()+'/tags');
             Tag.query(function (results) {
                 tags = [];
                 for(var i=0; i<results.length; i++){
@@ -56,14 +72,37 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
     $scope.teachers = [];
     $scope.tags = [];
 
-
+    var num_pdf = false;
     $scope.uploadFiles = function(files, errFiles) {
         if(!files){ return; }
         
+        if(num_pdf){
+        	$scope.many_pdfs=true; $scope.upload_incomplete=false;
+            $timeout(function() {  $scope.many_pdfs=false; $scope.upload_incomplete=true; }, 4000);
+        	return;
+        }
 
-        $scope.files = $scope.files.concat(files);
         $scope.errFiles = errFiles;
         angular.forEach(files, function(file) {
+
+        	if(num_pdf){
+                $scope.many_pdfs=true; $scope.upload_incomplete=false;
+                $timeout(function() {  $scope.many_pdfs=false; $scope.upload_incomplete=true; }, 4000);
+                return;
+            }
+        	
+            if (file.type=="application/pdf"){
+
+                if($scope.files.length>0){
+                    $scope.many_pdfs=true; $scope.upload_incomplete=false;
+                    $timeout(function() {  $scope.many_pdfs=false; $scope.upload_incomplete=true; }, 4000);
+                    return;
+                }
+                num_pdf = true;
+            }
+
+            $scope.files.push(file);
+
             file.upload = Upload.upload({
                 url: '/api/upload',
                 data: {file: file, session: $scope.session}
@@ -79,6 +118,7 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
             }, function (evt) {
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
             });
+
         });
     }
 
@@ -93,7 +133,7 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
 
 
     $scope.submit = function (data){
-
+      
         
         if ($scope.files.length==0){
             $scope.upload_incomplete=false;
@@ -102,17 +142,31 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource',function($sc
             return
         }
         for(var i=0; i<$scope.files.length; i++){
-            if($scope.files[0].progress!==100){
+            if($scope.files[i].progress!==100){
             
                 return;
             }
         }
+        
         if(data.name==null ||data.name=='' || data.type==null ||data.type=='' || data.tags==null ||data.tags=='' || data.course==null ||data.course=='' ){
             $scope.upload_incomplete=false;
             $scope.empty_fields=true;
             $timeout(function() {  $scope.empty_fields=false; $scope.upload_incomplete=true; }, 4000);
             return;
         }
+        if ($scope.courses.indexOf(data.course.toUpperCase())==-1){
+            $scope.upload_incomplete=false;
+            $scope.no_course=true;
+            $timeout(function() {  $scope.no_course=false; $scope.upload_incomplete=true; }, 4000);
+            return
+        }
+        if (data.teacher!=null && data.teacher!='' && $scope.teachers.indexOf(data.teacher)==-1){
+            $scope.upload_incomplete=false;
+            $scope.no_teacher=true;
+            $timeout(function() {  $scope.no_teacher=false; $scope.upload_incomplete=true; }, 4000);
+            return
+        }
+        
         
 
         course = data.course;

@@ -48,10 +48,24 @@ module.exports = function(app) {
 
 	app.post('/api/upload', isLoggedIn, multipartyMiddleware, function(req, res) {
 
+		error=false;
+
 		if(req.body.session){
 
 			var file = req.files.file;
-	  		var filename = file.path.replace(/^.*[\\\/]/, '')
+			console.log(file.type);
+	  		var filename = file.path.replace(/^.*[\\\/]/, '');
+
+			Upload.findOne({ session: req.body.session }, 
+    			function (err, upload) {
+    				if(upload.files.length>0 && file.type=="application/pdf"){
+    					error=true;
+    				}
+      			}
+      		);
+
+			if(error) return;
+
 			fs.rename(file.path, path.join(__dirname, '../../content', filename), function(){
 
 				Upload.findOneAndUpdate(

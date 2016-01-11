@@ -1,0 +1,128 @@
+
+
+<ol class="breadcrumb">
+    <li><a href="#/">Shelf</a></li>
+    <li>LETI</li>
+    <li>Edição</li>
+</ol>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Editar documentos</div>
+            <div class="panel-body">
+                <div class="text-center">
+                    <a class="btn btn-default btn-lg" ng-href="/preview/#/{{doc._id}}">Visualizar ficheiros</a>
+                </div>
+
+                <br>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="f in files">{{f.name}} {{f.$errorParam}}
+                      <div class="progress" ng-show="f.progress >= 0">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:{{f.progress}}%"  
+                            ng-bind="f.progress + '%'"></div>
+                      </div>
+                    </li>
+                    <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                    </li> 
+                </ul>
+                {{errorMsg}}
+                
+                <br />
+                <form name="uploadForm" novalidate ng-submit="submit(doc)" >
+                    <div class="form-group">
+                        <label for="name">Nome do documento</label>
+                        <input ng-value="doc.name" type="text" class="form-control" name="name" placeholder="Ex: Apontamentos Aula" ng-model="doc.name" >
+                        <span ng-show="doc.name==null || doc.name==''"  class="text-danger">* Campo obrigatório </span>   
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="programtags">Tipo de conteúdo</label>
+                                <autocomplete inputname="type" type="text" inputclass="form-control" data="types" name="type" placeholder="Ex: Slides" ng-model="doc.type" ></autocomplete>
+                               <span ng-show="doc.type==null || doc.type=='' "  class="text-danger">* Campo obrigatório </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="course">Cadeira</label>
+                                <autocomplete inputname="course" type="text" inputclass="form-control" data="courses" name="course" placeholder="Ex: ACED" maxlength="5" ng-model="doc.course"></autocomplete>
+                                <span ng-show="doc.course==null || doc.course=='' " class="text-danger">* Campo obrigatório </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="programtags">Tags da matéria</label>
+
+                                <tags-input ng-model="doc.tags">
+                                    <auto-complete source="tags"></auto-complete>
+                                </tags-input>
+                                <span ng-show="doc.tags==null || doc.tags.length==0 "  class="text-danger">* Campo obrigatório <br></span>
+                                <span class="text-warning">Separadas por vírgulas</span> 
+                            </div> 
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="teacher">Professor</label>
+
+                                <autocomplete inputname="teacher" type="text" inputclass="form-control" data="teachers" name="teacher" placeholder="Ex: João Pedro Pereira Boavida" ng-model="doc.teacher"></autocomplete>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="academicTerm">Semestre</label>
+                                <select class="form-control" name="term" ng-model="doc.academicTerm">
+                                    <option ng-repeat="term in terms">{{term}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">Submeter</button>
+                            <br><br>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="alert alert-warning" ng-show="upload_incomplete">
+                                Espera que os ficheiros sejam enviados para o Shelf e preenche os campos obrigatórios antes de submeter as informações.
+                            </div>
+
+                            <div class="alert alert-danger" ng-show="empty_fields">
+                                Completa os campos obrigatórios.
+                            </div>
+
+                            <div class="alert alert-danger" ng-show="no_files">
+                                Não há ficheiros carregados.
+                            </div>
+
+                            <div class="alert alert-danger" ng-show="no_course">
+                                A cadeira não existe.
+                            </div>
+
+                            <div class="alert alert-danger" ng-show="no_teacher">
+                                Esse professor não existe.
+                            </div>
+
+                            <div class="alert alert-danger" ng-show="many_pdfs">
+                                Só podem ser carregado 1 pdf de cada vez.
+                            </div>    
+                        </div>
+                    </div>
+                </form>
+            </div> 
+        </div>
+            
+
+        <br>
+    </div>
+</div>

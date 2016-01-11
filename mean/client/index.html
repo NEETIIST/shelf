@@ -49,7 +49,7 @@
                 <!--<li ng-class="{ active: isActive('/historico')}"><a ng-href="#/history">Histórico</a></li>-->
                 <li ng-class="{ active: isActive('/upload')}"><a ng-href="#/upload">Upload</a></li>
                 <li ng-class="{ active: isActive('/report')}"><a ng-href="#/report">Reportar</a></li>
-                <li ng-class="{ active: isActive('/admin')}"><a ng-href="#/admin">Admin</a></li>
+                <li ng-show="user.admin" ng-class="{ active: isActive('/admin')}"><a ng-href="#/admin">Admin</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a ng-href="/logout">Logout</a></li>

@@ -10,6 +10,7 @@ module.exports = function(passport){
         var result = {};
         fenix.person(token,function(err,user){
             result.username = user.username;
+            result.name = user.name;
             result.accessToken = user.accessToken;
             result.refreshToken = user.refreshToken;
 
@@ -48,6 +49,7 @@ module.exports = function(passport){
                     return done(err);
                 if (user) {
                     user.accessToken = accessToken;
+                    user.name = profile.name;
                     user.save()
 
 
@@ -56,8 +58,9 @@ module.exports = function(passport){
                 else {
                             
                     User.create({
-                        username : profile.username,
-                        accessToken : accessToken,
+                        username :      profile.username,
+                        name :         profile.name,
+                        accessToken :  accessToken,
                         refreshToken : refreshToken
 
                     }, function(err,user){

@@ -17,7 +17,7 @@
             <div class="panel-heading">Enviar documentos</div>
             <div class="panel-body" ng-hide="uploadComplete">
                 <div class="text-center">
-                <button class="btn btn-default btn-lg" ngf-select="uploadFiles($files, $invalidFiles)" multiple ngf-max-height="5000" ngf-max-size="5MB">Seleccionar ficheiros</button>
+                <button class="btn btn-default btn-lg" ngf-select="uploadFiles($files, $invalidFiles)" multiple ngf-max-height="100000" ngf-max-size="100MB">Seleccionar ficheiros</button>
                 </div>
 
                 <br>
@@ -55,7 +55,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="course">Cadeira</label>
-                            <autocomplete ngblur="updateTags()" inputname="course" type="text" inputclass="form-control" data="courses" name="course" placeholder="Ex: ACED" maxlength="5" ng-model="doc.course"></autocomplete>
+                            <autocomplete inputname="course" type="text" inputclass="form-control" data="courses" name="course" placeholder="Ex: ACED" maxlength="5" ng-model="doc.course"></autocomplete>
                             <span ng-show="doc.course==null || doc.course=='' " class="text-danger">* Campo obrigatório </span>
                     </div>
 
@@ -78,9 +78,9 @@
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="teachers">Professor</label>
+                            <label for="teacher">Professor</label>
 
-                            <autocomplete inputname="teacher" type="text" inputclass="form-control" data="teachers" name="course" placeholder="Ex: João Pedro Pereira Boavida" ng-model="doc.teacher"></autocomplete>
+                            <autocomplete inputname="teacher" type="text" inputclass="form-control" data="teachers" name="teacher" placeholder="Ex: João Pedro Pereira Boavida" ng-model="doc.teacher"></autocomplete>
 
     
                         </div>
@@ -111,9 +111,20 @@
                          <div class="alert alert-danger" ng-show="empty_fields">
                             Completa os campos obrigatórios.
                         </div>
+
                           <div class="alert alert-danger" ng-show="no_files">
                             Não há ficheiros carregados.
                         </div>
+                            <div class="alert alert-danger" ng-show="no_course">
+                            A cadeira não existe.
+                        </div>
+                            <div class="alert alert-danger" ng-show="no_teacher">
+                            Esse professor não existe.
+                        </div>
+                             <div class="alert alert-danger" ng-show="many_pdfs">
+                            Só podem ser carregado 1 pdf de cada vez.
+                        </div>
+                        
                     </div>
                 </div>
 
@@ -124,6 +135,8 @@
             <div class="panel-body" ng-show="uploadComplete">
                 Obrigado por bla bla bla.<br>
                 Espera pela aprovação de um administrador.
+                <br>
+                <button type="button" class="btn btn-primary" ng-click="new_upload()">New upload</button>
             </div>
             
         </div>
@@ -133,11 +146,9 @@
         <div class="js-upload-finished">
             <h4>Histórico</h4>
             <div class="list-group"> 
-                <a ng-repeat="doc in uploaded| orderBy:'date' " href="#" class="list-group-item" ng-class="{true:'list-group-item-success',false:'list-group-item-warning'}[doc.approved]">
+                <a ng-repeat="doc in uploaded " class="list-group-item" ng-class="{true:'list-group-item-success',false:''}[doc.approved]">
                     <span ng-class="{true:'alert-success',false:'alert-warning'}[doc.approved]" class="badge pull-right">{{doc.date}}</span>
                     {{doc.name}}
-
-
                 </a>
             </div>
         </div>

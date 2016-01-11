@@ -6,13 +6,13 @@ var document	= require("./controllers/document"),
 	upload 		= require("./controllers/upload"),
 	tag 		= require("./controllers/tag"),
 	teacher 	= require("./controllers/teacher"),
+	report 		= require("./controllers/report"),
+	admin 		= require("./controllers/admin"),
 	type 		= require("./controllers/type");
 
 
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated())
-    	return next();
-
+function isLoggedIn(req,res,next){
+	if (req.isAuthenticated()) return next();
 	res.redirect('/');
 }
 
@@ -36,6 +36,14 @@ module.exports = function(app,passport){
 
 
 	// REST API
+
+	app.get('/api/admin/docs', admin.isAdmin, admin.getDocs);
+	app.get('/api/admin/reports', admin.isAdmin, admin.getReport);
+	app.get('/api/admin/users', admin.isAdmin, admin.getAdmin);
+	app.post('/api/admin/docUpdate', admin.isAdmin, admin.docUpdate);
+	app.post('/api/admin/users', admin.isAdmin, admin.updateAdmin);
+	app.post('/api/admin/reports', admin.isAdmin, admin.updateReport);
+	
 	app.get('/api/degrees', isLoggedIn, degree.getDegrees);
 	app.get('/api/:course/terms', isLoggedIn, degree.getTerms);
 
@@ -48,6 +56,8 @@ module.exports = function(app,passport){
 	app.get('/api/:course/docs', isLoggedIn, document.getDocs);
 	app.post('/api/:course/docs', isLoggedIn, document.createDoc);
 
+	app.post('/api/reports', isLoggedIn, report.createReport);
+	
 	app.get('/api/:degree/types', isLoggedIn, type.getTypesByDegree);
 	app.get('/api/:course/types', isLoggedIn, type.getTypesByCourse);
 	
@@ -56,7 +66,11 @@ module.exports = function(app,passport){
 	
 	app.get('/api/:course/tags', isLoggedIn, tag.getTags);
 	
+	
+	app.get('/api/user', isLoggedIn, admin.getUser);
+
 	require('./controllers/upload')(app);
+	
 
 
 
