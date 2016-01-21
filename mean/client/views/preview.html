@@ -27,24 +27,22 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
 
+        <!-- Non-collapsing right-side icons -->
+        <ul class="nav navbar-nav" style="position:absolute; right:0; padding:0; margin:0">
+            <li ng-hide="goodBrowsers">
+                <a style="height:50px; padding-top:16px;" ng-href="{{download_url}}"><span class="glyphicon glyphicon-cloud-download"></span></a>
+            </li>
+            <li>
+                <a style="height:50px; padding-top:16px;" href="javascript:window.history.back();"><span class="glyphicon glyphicon-remove"></span></a>
+            </li>
+        </ul>
+
         <div class="navbar-header">
-            <a class="navbar-brand hidden-xs" href="cadeira.html">
-                <img src="/images/logo.png">
-            </a>
             <p class="pull-left">
                 <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                 {{content.title}}
             </p>
         </div>
-        <!-- Non-collapsing right-side icons -->
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="javascript:zoom()"><span class="glyphicon glyphicon-zoom-in"></span></a>
-            </li>
-            <li>
-                <a href="javascript:window.history.back();"><span class="glyphicon glyphicon-remove"></span></a>
-            </li>
-        </ul>
 
     </div>
 </nav>
@@ -53,46 +51,44 @@
 <div class="container-fluid preview">
     <div class="row preview">
         <div class="col-md-12 col-lg-12 preview" style="padding:0">
-            
            
            <div ng-switch="content.type" style="height:100%">
 
-                <div ng-switch-when="pdf" style="height:100%">
-                    <iframe ng-src="{{content.filename}}" width="100%" height="100%" frameborder="0"></iframe>
+                <div ng-switch-when="application/pdf" style="height:100%; background:#fff;">
+                    <iframe ng-src="{{trustSrc(content.filename)}}" width="100%" height="100%" frameborder="0"></iframe>
                 </div>
 
-                <div ng-switch-when="images">
-                    <div id="gallery" class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="position:static;">
-                        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                        <div class="pswp__bg"></div>
-                        <div class="pswp__scroll-wrap">
-                            <div class="pswp__container"></div>
-                            <div class="pswp__ui pswp__ui--hidden">
-                                <div class="pswp__top-bar" style="background:none;">
-                                    <div class="pswp__counter"></div>
-                                    <div class="pswp__preloader">
-                                        <div class="pswp__preloader__icn">
-                                            <div class="pswp__preloader__cut">
-                                                <div class="pswp__preloader__donut"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                                    <div class="pswp__share-tooltip"></div>
-                                </div>
-                                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-                                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
-                                <div class="pswp__caption">
-                                    <div class="pswp__caption__center"></div>
-                                </div>
-                            </div>
-                        </div>
+                <div ng-switch-when="images" style="height:100%;">
+
+                    <style>
+                    .viewer{ width: 100%; max-height: calc(100% - 100px); margin-top:10px; }
+                    .viewer img{  max-width: 100%; max-height: 100%; display:none; margin: 0 auto; width:auto; height:auto; }
+                    .browser{ text-align: center; display:block; height:80px;  }
+                    .browser li { float: left; list-style: none; }
+                    .browser li:hover{ cursor: pointer; }
+                    .browser li img { width:50px; height:50px; margin:4px; } 
+                    .active { border: 2px solid #07293f; }
+                    .viewer img.show{ display: block; }
+
+
+                    </style>
+
+                    <div class="viewer">
+                        <img ng-repeat="image in content.images" ng-class="{'show': isActive(image)}"  ng-src="{{image.src}}" />
                     </div>
+                    <div class="browser">
+                        <ul>
+                            <li ng-class="{'active': isActive(image)}" ng-repeat="image in content.images" ng-click="select(image)">
+                                <img ng-src="{{image.src}}" />
+                            </li>
+                        </ul>
+                    </div>
+
+                    
+
                 </div>
 
                 <div ng-switch-when="other">
-
                 </div>
 
            </div>
@@ -103,11 +99,14 @@
     
 </div>
 
+<script src="http://photoswipe.com/dist/photoswipe.min.js?v=4.1.1-1.0.4"></script>
+<script src="http://photoswipe.com/dist/photoswipe-ui-default.min.js?v=4.1.1-1.0.4"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-sanitize.min.js"></script>
 
 
-<script src="/js/vendor/photoswipe.min.js"></script>
-<script src="/js/vendor/photoswipe-ui-default.min.js"></script>
+
 
 
 <script type="text/javascript" src="/js/controllers/preview.js"></script>

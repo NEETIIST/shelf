@@ -1,6 +1,10 @@
+
+
 app.controller('document', ['$scope', '$resource','$routeParams', 
 
 	function ($scope, $resource, $routeParams) {
+
+		var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
 		// Title
 		$scope.title = $routeParams.course;
@@ -14,9 +18,12 @@ app.controller('document', ['$scope', '$resource','$routeParams',
   			$scope.title = course.name;
 		});
 
-		$scope.go = function ( docid ) {
-			var url = "/preview/#/"+docid;
-			console.log(url);
+		$scope.go = function ( doc ) {
+			var url = "/preview/#/"+doc._id;
+
+			if(doc.content[0].local && iOS)
+				url = "http://shelf.n1z.pt/content/"+doc.content[0].local;
+			
 			window.location.href=url;
 		};
 
@@ -65,21 +72,34 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 		// Tags
 		var Tag = $resource('/api/'+$routeParams.course+'/tags');
 		Tag.query(function (results) {
-			$scope.tags = results;
+			$scope.tags = [];
+			for (var i = 0; i < results.length; i++) {
+				$scope.tags.push(results[i]);
+			};
+			console.log($scope.tags);
 		});
 		$scope.tags = [];
 		$scope.toggleTag = function(tag) {
+			
+			console.log($scope.selected.tags);
+
     		var i = $scope.selected.tags.indexOf(tag);
-    		if (i === -1)
+    		if (i<0){
+    			console.log("por");
         		$scope.selected.tags.push(tag);
-    		else
+    		}
+    		else{
+    			console.log("tirar");
         		$scope.selected.tags.splice(i,1);
+    		}
+    		console.log($scope.selected.tags);
 		};
 		$scope.filterTag = function(doc) {
+			
 			if($scope.selected.tags.length==0)
 				return true;
 			for (var i = 0; i < doc.tags.length; i++) {
-    			if($scope.selected.tags.indexOf(doc.tags[i]) != -1)	
+    			if($scope.selected.tags.indexOf(doc.tags[i].text) != -1)	
     				return true;
 			}
         	return false;
@@ -111,17 +131,22 @@ app.controller('document', ['$scope', '$resource','$routeParams',
     	};
 
     	// Type
-		var Type = $resource('/api/'+$routeParams.course+'/types');
+		var Type = $resource('/api/'+$routeParams.course+'/doctypes');
 		Type.query(function (results) {
 			$scope.types = results;
 		});
 		$scope.types = [];
+
 		$scope.toggleType = function(type) {
+
     		var i = $scope.selected.types.indexOf(type);
-    		if (i === -1)
+    		if (i === -1){
+    			
         		$scope.selected.types.push(type);
-    		else
+        	}
+    		else{
         		$scope.selected.types.splice(i,1);
+        	}
 		};
 		$scope.filterType = function(doc) {
 			if($scope.selected.types.length==0)

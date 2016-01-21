@@ -1,8 +1,28 @@
-var app = angular.module('preview',[]);
+var app = angular.module('preview',['ngSanitize']);
 
-app.controller('preview', function($scope,$http,$location) {
+app.controller('preview', function($scope,$http,$location,$sce) {
+
+	$scope.goodBrowsers = (!/Android/.test(navigator.userAgent) && /Chrome|Safari/.test(navigator.userAgent));
+
+	$scope.trustSrc = function(src) {
+    	return $sce.trustAsResourceUrl(src);
+  	};
 
 	$scope.id = $location.url().split("/")[1];
+
+
+	$scope.select = function(img){
+		$scope.content.now = img.src;
+		for(i=0; i<$scope.content.images.length; i++){
+			$scope.content.images[i].active=false;
+		}
+		var i = $scope.content.images.indexOf(img);
+		$scope.content.images[i].active = true;
+		$scope.content.now = img.src;
+	}
+	$scope.isActive = function(img){
+		return $scope.content.images[$scope.content.images.indexOf(img)].active;
+	}
 
 	$http.get("http://shelf.n1z.pt/api/docs/"+$scope.id).
 		then(function(response) {
@@ -11,19 +31,29 @@ app.controller('preview', function($scope,$http,$location) {
 			$scope.content = {
 				title: 	data.name,
 				course: data.course,
-				type: 	"pdf" //data.filetype
+				type: 	response.data.content[0].mime //data.filetype
 			};	
 
-			if($scope.content.type=="pdf")
-				$scope.content.filename = "/js/vendor/pdf/web/viewer.html?pdf=/content/"+response.data.content[0].local;
+			if(["image/jpeg","image/png","image/tiff","image/gif"].indexOf($scope.content.type)!=-1){
+				$scope.content.type="images";
+			}
 
-			if($scope.content.type=="images"){
-				items = [];
-				for(i=0; i<data.content.length; i++){
-					items.push({src: data.content[i].local,w: data.content[i].w,h: data.content[i].h});
+			if($scope.content.type=="application/pdf"){
+
+				$scope.content.filename = "https://docs.google.com/gview?embedded=true&url=http://shelf.n1z.pt/content/"+response.data.content[0].local;
+				$scope.download_url = "http://shelf.n1z.pt/content/"+response.data.content[0].local;
+				if($scope.goodBrowsers)
+					$scope.content.filename = $scope.download_url;
+			}
+
+			if($scope.content.type=="images"){		
+				console.log(response.data.content);
+				$scope.content.images = [];
+				for(i=0; i<response.data.content.length; i++){
+					if(i==0){ $scope.content.now = "http://shelf.n1z.pt/content/"+response.data.content[0].local; }
+					$scope.content.images.push({active: (i==0), src: "http://shelf.n1z.pt/content/"+response.data.content[i].local});
 				}
-				var gallery = new PhotoSwipe(document.getElementById("gallery"),PhotoSwipeUI_Default,items,{history: false,focus: false,modal: false, closeOnScroll: false,showAnimationDuration: 0,hideAnimationDuration: 0});
-					gallery.init();
+				console.log($scope.content.images);
 			}
 
 		}, function(response) {
@@ -31,5 +61,3 @@ app.controller('preview', function($scope,$http,$location) {
       	});
 
 });
-
-

@@ -1,5 +1,4 @@
-var app = angular.module('shelf', ['ngTagsInput','ngResource','ngRoute','angularjs-dropdown-multiselect','hljs',
-  'ui.bootstrap','ngFileUpload']);
+var app = angular.module('shelf', ['ngTagsInput','ngResource','ngRoute','angularjs-dropdown-multiselect','ngFileUpload']);
 
 function isAdmin($location,User){
     User.getInfo().then(function(res){
@@ -29,8 +28,13 @@ app.config(function($routeProvider, $httpProvider) {
             resolve: { mess : function($location,User){ isAdmin($location,User); } }
         })
         .when('/admin/docs/:docid', {
-            templateUrl: 'views/editDocument.html',
+            templateUrl: 'views/admin/document.html',
             controller: 'editDocument',
+            resolve: { mess : function($location,User){ isAdmin($location,User); } }
+        })
+        .when('/admin/reports/:reportid', {
+            templateUrl: 'views/admin/report.html',
+            controller: 'viewBugs',
             resolve: { mess : function($location,User){ isAdmin($location,User); } }
         })
         .when('/', {
@@ -66,5 +70,11 @@ app.controller('navbar',['$scope','$location','User',function($scope,$location,$
 
 }]);
 
+
+$(document).ready(function () {
+    $(".navbar-nav li a").click(function(event) {
+        $(".navbar-collapse").collapse('hide');
+    });
+});
 
 

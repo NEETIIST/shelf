@@ -10,9 +10,14 @@ module.exports.getTerms   = function(req,res) {
     	function (err, results) {
         	terms = [];
         	for(i=0; i<results.length; i++){
-          		if(results[i].academicTerm) terms.push(results[i].academicTerm)
+          		if(results[i].academicTerm){
+                if(terms.indexOf(results[i].academicTerm)==-1)
+                  terms.push(results[i].academicTerm)
+              } 
+
         	}
-        	terms.unique();
+        
+          
 
         	console.log("\tCOURSE TERMS json response");
 

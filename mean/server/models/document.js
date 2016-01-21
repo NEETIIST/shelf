@@ -8,9 +8,11 @@ module.exports = mongoose.model('Document', {
 	course: 		String,
 	uploaded: 		{ type: Date, default: Date.now },
 	academicTerm: 	String,
-	tags: 			[String],
-	approved: 		Boolean,
+	tags: 			[{text:String}],
+	approved: 		{type: Boolean, default: false},
+	hide: 			Boolean,
 	content: 		[{
+		mime:       String,
 		meocloud: 	String,
 		drive: 		String, 
 		dropbox: 	String,

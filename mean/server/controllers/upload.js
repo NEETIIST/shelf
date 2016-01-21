@@ -70,7 +70,7 @@ module.exports = function(app) {
 
 				Upload.findOneAndUpdate(
 					{ session: req.body.session },
-					{ $addToSet: {files: filename} },
+					{ $addToSet: {files: {filename :filename ,mime: file.type } }},
 					{safe: true, upsert: true},
 					function(err, model) { 
 						

@@ -8,8 +8,13 @@ module.exports.createReport = function(req,res){
 	
 	data = req.body;
 
+	if(data.text.length>2000){
+		res.send({success:false});
+	}
+
 	var report = new Report({
 		username: 		req.user.username,
+		name: 		req.user.name,
 		text: 			data.text,
 		visible:  	 	true
 			

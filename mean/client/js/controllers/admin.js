@@ -1,22 +1,83 @@
-app.controller('admin', ['$scope','$http',function($scope,$http) {
+app.factory('Documents', ['$http', function ($http) {
+    var factory = {};
+    	factory.docs = [];
+    	factory.full = false;
+
+    factory.getDocs = function(callback){
+    	if(!factory.full){
+    		$http.get("/api/admin/docs").then(function(data,status){
+	        	factory.docs = data.data;
+	        	factory.docs.reverse();
+	        	factory.full = true;
+	        	callback(factory.docs);
+	    	});
+	    }else{
+	    	callback(factory.docs);
+	    }
+    };
+
+    factory.getDocById = function(doc_id,callback){
+    	factory.getDocs(function(docs){
+    		for(i=0; i<docs.length; i++){
+    			if(docs[i]._id==doc_id){
+    				callback(docs[i]);
+    				return;
+    			}
+    		}
+    		callback(null);
+    	});
+    };
+    return factory;
+}]);
+
+
+app.factory('Reports', ['$http', function ($http) {
+    var factory = {};
+    	factory.reports = [];
+    	factory.full = false;
+
+    factory.getReports = function(callback){
+    	if(!factory.full){
+    		$http.get("/api/admin/reports").then(function(data,status){
+	        	factory.reports = data.data;
+	        	factory.reports.reverse();
+	        	factory.full = true;
+	        	callback(factory.reports);
+	    	});
+	    }else{
+	    	callback(factory.reports);
+	    }
+    };
+
+    factory.getReportById = function(doc_id,callback){
+    	factory.getReports(function(reports){
+    		for(i=0; i<reports.length; i++){
+    			if(reports[i]._id==doc_id){
+    				callback(reports[i]);
+    				return;
+    			}
+    		}
+    		callback(null);
+    	});
+    };
+    return factory;
+}]);
+
+app.controller('admin', ['$scope','$http','Documents','Reports',function($scope,$http,Documents,Reports) {
 
 	$scope.add = {};
 
 	$scope.docs = [];
 
-	$http.get("/api/admin/docs").then(function(data,status){
-	               
-	               $scope.docs = data.data;
-	               $scope.docs.reverse();
-	        });
-
 	$scope.reports = [];
 
-	$http.get("/api/admin/reports").then(function(data,status){
-	               
-	               $scope.reports = data.data;
-	               $scope.reports.reverse();
-	        });
+	Documents.getDocs(function(docs){
+		$scope.docs = docs;
+	});
+
+	Reports.getReports(function(reports){
+		$scope.reports = reports;
+	});
 
 
 
@@ -70,15 +131,44 @@ app.controller('admin', ['$scope','$http',function($scope,$http) {
         });
         
 	}
-}]);
 
-app.controller("editDocument",['$scope','$http',function($scope,$http){
+	$scope.deleteReport = function (data){
+		     	    
+	    $http.post("/api/admin/reports",data).then(function(res,status){
+	       $scope.reports.splice($scope.reports.indexOf(data),1);
+	      
+	    }); 
+        
+	}
 
-	$scope.doc = {
-		name: "Merda caraho",
-		_id: "cona123",
-		
-	};
+	$scope.updateDoc = function (data,hide){
+			 console.log(data._id);
+		hideBoolean=false;
+		approvedBoolean=false;
+		if (hide==1){
+			hideBoolean=true;	
+        };
+        if (hide==0){
+        	approvedBoolean=true;
+        }
+
+     	Documents.getDocById(data._id,function(doc){
+     		doc.approved = approvedBoolean;
+	    	doc.hide = hideBoolean; 
+		    
+			
+		    $http.post("/api/admin/docs",doc).then(function(res,status){
+		       $scope.docs.splice($scope.docs.indexOf(data),1);  
+		    }); 
+     	});
+        
+	}
+
+
+
+
+
+
 
 
 }]);

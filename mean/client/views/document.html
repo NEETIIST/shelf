@@ -21,7 +21,6 @@
             </div>
         </div> 
         
-
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">Semestre</h3>
@@ -64,7 +63,7 @@
                 <h3 class="panel-title">Programa</h3>
             </div>
             <div class="panel-body tags">
-                <button ng-repeat="tag in tags" ng-class="{'active': !(selected.tags.indexOf(tag) == -1)}" type="button" ng-click="toggleTag(tag)" class="btn btn-default" data-toggle="button">{{tag}}</button>
+                <button ng-repeat="tag in tags"  type="button" ng-click="toggleTag(tag)" class="btn btn-default" data-toggle="button">{{tag}}</button>
             </div>
         </div>
 
@@ -82,7 +81,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-click="go(doc._id)" ng-repeat="doc in documents | filter:filterTeacher | filter:search | filter: filterType | filter: filterTag | filter: filterTerm">
+                <tr ng-click="go(doc)" ng-repeat="doc in documents | filter:filterTeacher | filter:search | filter: filterType | filter: filterTag | filter: filterTerm">
                     <td>{{doc.name}}</td>
 					<td>{{doc.uploader}}</td>
 					<td>{{doc.uploaded}}</td>

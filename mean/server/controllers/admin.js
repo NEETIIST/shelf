@@ -20,7 +20,7 @@ module.exports.getDocs = function(req,res){
 
 	console.log("\nGET /api/admin/docs");
 
-	Document.find({ approved: false }, 
+	Document.find({ approved: false, hide: false }, 
     	function (err, results) {
        
     		console.log("\tDOCUMENTS json response");
@@ -29,32 +29,33 @@ module.exports.getDocs = function(req,res){
     );
 };
 
-module.exports.getReport = function(req,res){
-
-	console.log("\nGET /api/admin/reports");
-
-	Report.find({visible:true}, 
-    	function (err, results) {
-    		console.log("\tDOCUMENTS json response");
-        	res.json(results);
-      	}
-    );
-};
-
 module.exports.docUpdate = function(req,res){
     
-    console.log("\nPOST /api/admin/docUpdate");
-    
-    data = req.body;
+  console.log("\nPOST /api/admin/docs");
+  
+  data = req.body;
+   
 
-    Document.updateOne(
-      { _id : data._id},
-      {
-        $set: { "approved": true }
-      }, function(err, results) {
-      console.log(results);
-      callback();
-   });
+  Document.findOne({ _id :data._id}, function(err, doc) {
+    if (err){
+      res.json({success:false});
+    }
+    doc.name = data.name;
+    doc.type = data.type;
+    if(data.teacher==null && data.teacher=='' ||data.academicTerm==null && data.academicTerm==''  ){
+      doc.teacher = data.teacher;
+      doc.academicTerm = data.academicTerm;
+    }
+    doc.course = data.course;
+    doc.tags = data.tags;
+    doc.approved = data.approved;
+    doc.hide = data.hide;
+    console.log('conas');
+    console.log(doc);
+    doc.save();
+    res.json({success:true});
+   
+  })
     
 };
 
@@ -104,6 +105,18 @@ module.exports.updateAdmin = function(req,res){
     
 };
 
+module.exports.getReport = function(req,res){
+
+  console.log("\nGET /api/admin/reports");
+
+  Report.find({visible:true}, 
+      function (err, results) {
+        console.log("\tDOCUMENTS json response");
+          res.json(results);
+        }
+    );
+};
+
 module.exports.updateReport = function(req,res){
   
   console.log("\nPOST /api/admin/reports");
@@ -111,12 +124,12 @@ module.exports.updateReport = function(req,res){
  
  
 
-  User.findOne({ _id : data._id }, function(err, user) {
+  Report.findOne({ _id : data._id }, function(err, report) {
     if (err){
         res.json({success:false});
     }
-    user.visible= false;
-    user.save();
+    report.visible= false;
+    report.save();
     res.json({success:true});
    
   })
@@ -127,15 +140,12 @@ module.exports.updateReport = function(req,res){
 module.exports.getUser = function(req,res){
   
   console.log("\nget /api/user");
-  
-
-
-   User.findOne({ username: req.user.username}, 
-      function (err, results) {
-        console.log("\tDOCUMENTS json response");
-          res.json({username: results.username , admin: results.admin, name: results.name});
-        }
-    );
+  User.findOne({ username: req.user.username}, 
+    function (err, results) {
+      console.log("\tDOCUMENTS json response");
+        res.json({username: results.username , admin: results.admin, name: results.name});
+      }
+  );
 
   
     

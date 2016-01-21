@@ -32,12 +32,15 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource','$route',fun
 
     
     
-
+    var courses;
     var Course = $resource('/api/leti/courses');
     Course.query(function (results) {
         for(var i=0; i<results.length; i++){
-            $scope.courses.push(results[i].acronym.toUpperCase());
+            $scope.courses.push(results[i].acronym);
         }
+        courses = $scope.courses.map(function(value){
+            return value.toUpperCase();
+        });
     });
     $scope.courses = [];
 
@@ -51,9 +54,14 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource','$route',fun
     $scope.doc=[];
     $scope.doc.course="";
 
+    
+
     $scope.$watch('doc.course', function() {
 
-        if($scope.courses.indexOf($scope.doc.course.toUpperCase())>-1){
+        if(!courses)
+            return;
+
+        if(courses.indexOf($scope.doc.course.toUpperCase())>-1){
             var Teacher = $resource('/api/'+$scope.doc.course.toUpperCase()+'/teachers');
             Teacher.query(function (results) {
                 $scope.teachers=results;
@@ -90,7 +98,7 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource','$route',fun
                 $timeout(function() {  $scope.many_pdfs=false; $scope.upload_incomplete=true; }, 4000);
                 return;
             }
-        	
+        	console.log(file.type);
             if (file.type=="application/pdf"){
 
                 if($scope.files.length>0){
@@ -154,7 +162,7 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource','$route',fun
             $timeout(function() {  $scope.empty_fields=false; $scope.upload_incomplete=true; }, 4000);
             return;
         }
-        if ($scope.courses.indexOf(data.course.toUpperCase())==-1){
+        if (courses.indexOf(data.course.toUpperCase())==-1){
             $scope.upload_incomplete=false;
             $scope.no_course=true;
             $timeout(function() {  $scope.no_course=false; $scope.upload_incomplete=true; }, 4000);
@@ -172,19 +180,14 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource','$route',fun
         course = data.course;
         var Document = $resource('/api/'+course+'/docs');
 
-        var doc = new Document(); 
-
-        var tags = [];
-        for(var i=0; i<data.tags.length; i++){
-            tags.push(data.tags[i].text);
-        }
+        var doc = new Document();
         
         var result = {
             name            : data.name,
             academicTerm    : data.academicTerm,
-            tags            : tags,
+            tags            : data.tags,
             teacher         : data.teacher,
-            course          : data.course.toUpperCase(),
+            course          : data.course,
             type            : data.type,
             session         : $scope.session
         };

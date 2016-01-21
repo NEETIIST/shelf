@@ -1,5 +1,6 @@
 var Document  = require("../models/document");
 var Upload  = require("../models/upload");
+var User  = require("../models/user");
 
 
 module.exports.createDoc = function(req,res){
@@ -18,31 +19,35 @@ module.exports.createDoc = function(req,res){
 			console.log("\t\tFILE: "+obj.files[i]);
 
 			content.push({
-				local : obj.files[i]
+				local : obj.files[i].filename , mime: obj.files[i].mime
 			});
 		}
+		
+		console.log("\ttags: "+data.tags);
+		User.findOne({username:req.user.username},function(err,user){
+      		var document = new Document({
+				name: 			data.name,
+				uploader: 		req.user.username,
+				type: 			data.type,
+				teacher: 		data.teacher,
+				course: 		data.course,
+				academicTerm: 	data.academicTerm,
+				tags: 			data.tags,
+				approved: 		user.admin,
+				hide: 			false,
+				content: 		content
+			});
 
-		var document = new Document({
-			name: 			data.name,
-			uploader: 		req.user.username,
-			type: 			data.type,
-			teacher: 		data.teacher,
-			course: 		data.course,
-			academicTerm: 	data.academicTerm,
-			tags: 			data.tags,
-			approved: 		false,
-			content: 		content
-		});
+			console.log("\tDOCUMENT: "+data.name);
 
-		console.log("\tDOCUMENT: "+data.name);
-
-		document.save(function(err,data){
-			if(!err){
-				console.log("\tJSON saved");
-				res.json(data);
-			}
-			
-		});
+			document.save(function(err,data){
+				if(!err){
+					console.log("\tJSON saved");
+					res.json(data);
+				}
+				
+			});
+    	});
 	});
 };
 
@@ -51,7 +56,7 @@ module.exports.getDocs = function(req,res){
 
 	console.log("\nGET /api/"+req.params.course+"/docs");
 
-	Document.find({ course: req.params.course, approved: true }, 
+	Document.find({ course: { $regex : new RegExp(req.params.course, "i") }, approved: true , hide: false}, 
     	function (err, results) {
     		console.log("\tDOCUMENTS json response");
         	res.json(results);

@@ -146,7 +146,7 @@
         <div class="js-upload-finished">
             <h4>Histórico</h4>
             <div class="list-group"> 
-                <a ng-repeat="doc in uploaded " class="list-group-item" ng-class="{true:'list-group-item-success',false:''}[doc.approved]">
+                <a ng-repeat="doc in uploaded " class="list-group-item" ng-class="{true:'list-group-item-success',false:''}[doc.approved]||{true:'list-group-item-danger',false:''}[doc.hide]">
                     <span ng-class="{true:'alert-success',false:'alert-warning'}[doc.approved]" class="badge pull-right">{{doc.date}}</span>
                     {{doc.name}}
                 </a>

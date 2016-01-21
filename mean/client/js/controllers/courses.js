@@ -1,3 +1,5 @@
+
+
 app.controller('courses', ['$scope','$resource', 
 
 	function ($scope,$resource) {

@@ -1,17 +1,22 @@
 var Document  = require("../models/document");
 var Course  = require("../models/course");
+Array.prototype.unique = function(){ var o = {}, i, l = this.length, r = []; for(i=0; i<l;i+=1) o[this[i]] = this[i]; for(i in o) r.push(o[i]); return r; };
 
 
 module.exports.getDocsTeachers   = function(req,res) {
 
 	console.log("\nGET /api/"+req.params.course+"/docteachers");
 
-  	Document.find({ course: req.params.course, approved: true }, 
+  	Document.find({ course: { $regex : new RegExp(req.params.course, "i") }, approved: true }, 
     	function (err, results) {
         	teachers = [];
         	for(i=0; i<results.length; i++){
-          		teachers.push(results[i].teacher);
-          		teachers.unique();
+              if(results[i].teacher){
+                if(teachers.indexOf(results[i].teacher)==-1)
+                 teachers.push(results[i].teacher);
+              } 
+          		
+          		
         	}
         	
         	console.log("\tDOCUMENTS TEACHERS json response");
@@ -25,7 +30,7 @@ module.exports.getCourseTeachers   = function(req,res) {
   	
 	console.log("\nGET /api/"+req.params.course+"/teachers");
 
-  	Course.find({ acronym: req.params.course }, 
+  	Course.find({ acronym: { $regex : new RegExp(req.params.course, "i") } }, 
     	function (err, results) {
         	if(results){
             	if(results.length>0){

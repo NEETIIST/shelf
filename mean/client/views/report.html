@@ -7,7 +7,7 @@
             <div class="col-md-12" ng-hide="report_complete">
                     <form novalidate ng-submit="submit(report)" >
                         <label for="input">Sugestões:</label>
-                        <textarea class="form-control" rows="7" ng-model="report.bugdetails"></textarea>
+                        <textarea maxlength="2000" class="form-control" rows="7" ng-model="report.bugdetails"></textarea>
                         <br>
                         <button type="submit" class="btn btn-primary btn-lg">Submeter</button>
                     </form>

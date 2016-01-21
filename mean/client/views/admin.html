@@ -1,16 +1,16 @@
-<div class="row">
+<div class="row" ng-hide="view_report">
 	<div class="col-md-8">
 		<div class="panel panel-default">
   			<div class="panel-heading">Lista de ficheiros submetidos</div>
   			<div class="panel-body list-group">
-  				<a class="list-group-item clearfix" ng-repeat="doc in docs">
+  				<li class="list-group-item clearfix" ng-repeat="doc in docs">
 					<span class="glyphicon glyphicon-file"></span> 
-					{{doc.name}} - {{doc.course}}
+					<a ng-href="#/admin/docs/{{doc._id}}">{{doc.name}} - {{doc.course}} - {{doc._id}}</a>
 					<span class="pull-right">
-					<button class="btn btn-xs btn-success" ng-click=""><span class="glyphicon glyphicon-ok"></span></button>
-					<button class="btn btn-xs btn-danger" ng-click=""><span class="glyphicon glyphicon-trash"></span></button>
+					<button class="btn btn-xs btn-success" ng-click="updateDoc(doc,0)"><span class="glyphicon glyphicon-ok"></span></button>
+					<button class="btn btn-xs btn-danger" ng-click="updateDoc(doc,1)"><span class="glyphicon glyphicon-trash"></span></button>
 					</span>
-				</a>
+				</li>
 			</div>
 		</div>
 	</div>
@@ -21,12 +21,12 @@
 		<div class="panel panel-default">
 		  	<div class="panel-heading">Report de Bugs</div>
 		  	<div class="panel-body list-group">
-				<a class="list-group-item clearfix" ng-repeat="report in reports">
-					{{report.username}}
+				<li class="list-group-item clearfix" ng-repeat="report in reports">
+					<a ng-href="#/admin/reports/{{report._id}}">{{report.username}}</a>
 					<span class="pull-right">
-						<button class="btn btn-xs btn-danger" ng-click=""><span class="glyphicon glyphicon-trash"></span></button>
+						<button class="btn btn-xs btn-danger" ng-click="deleteReport(report)"><span class="glyphicon glyphicon-trash"></span></button>
 					</span>
-				</a>
+				</li>
 			</div>
 		</div>
 
@@ -52,4 +52,16 @@
 		    </div>
 	    </div>
 	</div>
+</div>
+
+<div class="row" ng-show="view_report">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{report.name}}<br>{{report.username}} - {{report.date}}</div>
+            <div class="panel-body">
+                {{report.text}}
+            </div>
+        </div>
+    </div>
+
 </div>

@@ -40,7 +40,7 @@ module.exports = function(app,passport){
 	app.get('/api/admin/docs', admin.isAdmin, admin.getDocs);
 	app.get('/api/admin/reports', admin.isAdmin, admin.getReport);
 	app.get('/api/admin/users', admin.isAdmin, admin.getAdmin);
-	app.post('/api/admin/docUpdate', admin.isAdmin, admin.docUpdate);
+	app.post('/api/admin/docs', admin.isAdmin, admin.docUpdate);
 	app.post('/api/admin/users', admin.isAdmin, admin.updateAdmin);
 	app.post('/api/admin/reports', admin.isAdmin, admin.updateReport);
 	
@@ -59,7 +59,7 @@ module.exports = function(app,passport){
 	app.post('/api/reports', isLoggedIn, report.createReport);
 	
 	app.get('/api/:degree/types', isLoggedIn, type.getTypesByDegree);
-	app.get('/api/:course/types', isLoggedIn, type.getTypesByCourse);
+	app.get('/api/:course/doctypes', isLoggedIn, type.getTypesByCourse);
 	
 	app.get('/api/:course/docteachers', isLoggedIn, teacher.getDocsTeachers);
 	app.get('/api/:course/teachers', isLoggedIn, teacher.getCourseTeachers);
