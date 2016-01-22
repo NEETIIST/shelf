@@ -17,6 +17,9 @@ app.use('/views', express.static(__dirname + '/client/views'));
 app.use('/css', express.static(__dirname + '/client/css'));
 app.use('/images', express.static(__dirname + '/client/images'));
 app.use('/content', express.static(__dirname + '/content'));
+app.use('/download', express.static(__dirname + '/content',{
+	setHeaders: function(res,path){ res.attachment(path); }
+}));
 
 
 

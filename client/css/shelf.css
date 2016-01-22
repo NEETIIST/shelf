@@ -10,6 +10,7 @@ ul.autocomplete { padding:0; }
 #intro h1{ font-size: 50px; }
 #intro ul{ margin:0; padding:0; } #intro li{ list-style: none; }
 
+
 .cadeira .list-group-item{ overflow-x: hidden; white-space: nowrap; }
 .cadeira .label{ width:60px; display: inline-block; margin-right:15px; }
 .tags button { margin: 0 8px 8px 0; }
@@ -177,12 +178,27 @@ html,body {height:100%;}
 
 .autocomplete li.active{
   width: 100%;
-  background-color: #4bf;
+  /*background-color:  #4bf ;*/
+  background: #07293f;
+  color:#fff;
 }
 
+.autocomplete input:focus{
+  border: 1px solid #07293f;
+  outline: none;
+  box-shadow: none;
+}
+.tags.form-control{
+  box-shadow: none !important;
+}
 
 
 /* dropdown select semester */
 .multiselect-parent.btn-group.dropdown-multiselect, .dropdown-toggle,.dropdown-menu{
             width:100%; text-align:left;
         }
+
+
+.white{
+  background: #fff !important;
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{content.course}} - {{content.title}}</title>
     <link rel="stylesheet" href="/css/theme.min.css">
 
@@ -29,7 +29,7 @@
 
         <!-- Non-collapsing right-side icons -->
         <ul class="nav navbar-nav" style="position:absolute; right:0; padding:0; margin:0">
-            <li ng-hide="goodBrowsers">
+            <li ng-hide="content.type=='images' || content.type=='other'">
                 <a style="height:50px; padding-top:16px;" ng-href="{{download_url}}"><span class="glyphicon glyphicon-cloud-download"></span></a>
             </li>
             <li>
@@ -48,9 +48,9 @@
 </nav>
 
 
-<div class="container-fluid preview">
-    <div class="row preview">
-        <div class="col-md-12 col-lg-12 preview" style="padding:0">
+<div class="container-fluid preview" ng-class="{'white' : content.type=='other'}">
+    <div class="row preview" ng-class="{'white' : content.type=='other'}">
+        <div class="col-md-12 col-lg-12 preview" style="padding:0" ng-class="{'white' : content.type=='other'}">
            
            <div ng-switch="content.type" style="height:100%">
 
@@ -61,20 +61,20 @@
                 <div ng-switch-when="images" style="height:100%;">
 
                     <style>
-                    .viewer{ width: 100%; max-height: calc(100% - 100px); margin-top:10px; }
-                    .viewer img{  max-width: 100%; max-height: 100%; display:none; margin: 0 auto; width:auto; height:auto; }
-                    .browser{ text-align: center; display:block; height:80px;  }
+                    .viewer{width:100%; min-height: calc(100% - 100px); max-height: calc(100% - 100px); margin-top:10px; }
+                    .viewer img{ display:none; max-width: 100%; max-height: 100%; margin: 0 auto auto; width:auto; height:auto; }
+                    .browser{ text-align: center; display:block; height:80px; background: #000; }
                     .browser li { float: left; list-style: none; }
                     .browser li:hover{ cursor: pointer; }
                     .browser li img { width:50px; height:50px; margin:4px; } 
                     .active { border: 2px solid #07293f; }
-                    .viewer img.show{ display: block; }
+                    .viewer iframe.show{ display:block; }
 
 
                     </style>
 
                     <div class="viewer">
-                        <img ng-repeat="image in content.images" ng-class="{'show': isActive(image)}"  ng-src="{{image.src}}" />
+                        <img ng-repeat="image in content.images" ng-class="{'show': isActive(image)}"  ng-src="{{image.src}}">
                     </div>
                     <div class="browser">
                         <ul>
@@ -88,7 +88,22 @@
 
                 </div>
 
-                <div ng-switch-when="other">
+                <div ng-switch-when="other" >
+
+                    <div style="text-align:center; width:100%; margin-top:100px">
+
+                            <a style="width:200px; height:88px; padding:16px; font-size:50px" type="button" class="btn btn-primary btn-lg" ng-href="{{download_url}}">
+
+                                <span class="glyphicon glyphicon-cloud-download"></span>
+
+                            </a>
+                            <br><br>
+                            <p>Pre-visualização não disponível</p>
+
+                            <i><b>{{content.title}}</b> <br> {{content.mime}}</i>
+
+                    </div>
+
                 </div>
 
            </div>

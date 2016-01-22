@@ -162,12 +162,12 @@ exports.insert =function (file,course,term,done){
     
 }
 
-Drive.insert("config.js","eu","tou",function(err,argument) {
+Drive.insert("config.js","janeiro","2016",function(err,argument) {
     console.log(argument);
     })
 
 
-console.log("ups!!!!!");
+
 
 
 

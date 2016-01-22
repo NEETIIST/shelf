@@ -1,8 +1,8 @@
 
 
-app.controller('document', ['$scope', '$resource','$routeParams', 
+app.controller('document', ['$scope', '$resource','$routeParams','Courses',
 
-	function ($scope, $resource, $routeParams) {
+	function ($scope, $resource, $routeParams, Courses) {
 
 		var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -11,17 +11,18 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 
 
 
-		// Course
-		var Course = $resource('/api/course/:courseid',{courseid:'@courseid'});
+		
 
-		Course.get({courseid:$routeParams.course}, function(course) {
+		Courses.getCourseByAcronym($routeParams.course, function(course) {
   			$scope.title = course.name;
 		});
+
+
 
 		$scope.go = function ( doc ) {
 			var url = "/preview/#/"+doc._id;
 
-			if(doc.content[0].local && iOS)
+			if(doc.content[0].mime.indexOf("application/pdf")!=-1 && iOS)
 				url = "http://shelf.n1z.pt/content/"+doc.content[0].local;
 			
 			window.location.href=url;
@@ -33,6 +34,9 @@ app.controller('document', ['$scope', '$resource','$routeParams',
 		var Document = $resource('/api/'+$routeParams.course+'/docs');
 		Document.query(function (results) {
 			$scope.documents = results;
+			for(i=0; i<$scope.documents.length; i++){
+				$scope.documents[i].uploaded = $scope.documents[i].uploaded.substring(0,10);
+			}
 		});
 		$scope.documents = [];
 

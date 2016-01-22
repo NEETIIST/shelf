@@ -31,19 +31,23 @@ app.controller('preview', function($scope,$http,$location,$sce) {
 			$scope.content = {
 				title: 	data.name,
 				course: data.course,
+				mime: 	response.data.content[0].mime,
 				type: 	response.data.content[0].mime //data.filetype
 			};	
 
 			if(["image/jpeg","image/png","image/tiff","image/gif"].indexOf($scope.content.type)!=-1){
 				$scope.content.type="images";
 			}
-
-			if($scope.content.type=="application/pdf"){
+			else if($scope.content.type=="application/pdf"){
 
 				$scope.content.filename = "https://docs.google.com/gview?embedded=true&url=http://shelf.n1z.pt/content/"+response.data.content[0].local;
-				$scope.download_url = "http://shelf.n1z.pt/content/"+response.data.content[0].local;
+				$scope.download_url = "http://shelf.n1z.pt/download/"+response.data.content[0].local;
 				if($scope.goodBrowsers)
-					$scope.content.filename = $scope.download_url;
+					$scope.content.filename = "http://shelf.n1z.pt/content/"+response.data.content[0].local;
+			}
+			else{
+				$scope.content.type = "other";
+				$scope.download_url = "http://shelf.n1z.pt/download/"+response.data.content[0].local;
 			}
 
 			if($scope.content.type=="images"){		

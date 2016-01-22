@@ -99,7 +99,8 @@ app.controller('upload', ['$scope','Upload', '$timeout','$resource','$route',fun
                 return;
             }
         	console.log(file.type);
-            if (file.type=="application/pdf"){
+            if (file.type.indexOf("image")==-1){
+
 
                 if($scope.files.length>0){
                     $scope.many_pdfs=true; $scope.upload_incomplete=false;
