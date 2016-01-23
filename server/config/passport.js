@@ -40,7 +40,7 @@ module.exports = function(passport){
             tokenURL: 'https://fenix.tecnico.ulisboa.pt/oauth/access_token',
             clientID: "1132965128044570",
             clientSecret: "FJL67JqPbgJrD7bBfdnTUdvFB7SYTwhpfyw09cMtiiytD8BsMs1LWVGTkA2Y4H5RyB0AmdqqL24c4d8Nr8DETw==",
-            callbackURL: "http://shelf.n1z.pt/auth/fenix/callback"
+            callbackURL: "http://shelf.neeti-ist.pt/auth/fenix/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             User.findOne({ 'username' : profile.username }, function(err, user) {

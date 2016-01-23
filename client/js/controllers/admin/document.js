@@ -73,6 +73,16 @@ app.controller("editDocument",['$resource','$scope','$http','Documents','$routeP
 
     }
 
+    $scope.go = function ( doc ) {
+        var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
+        var url = "/preview/#/"+doc._id;
+
+        if(doc.content[0].mime.indexOf("application/pdf")!=-1 && iOS)
+            url = "http://shelf.neeti-ist.pt/content/"+doc.content[0].local;
+        
+        window.location.href=url;
+    };
+
     $scope.terms = [];
     var date = new Date();
     for (var i = 2006; i<date.getFullYear(); i++){

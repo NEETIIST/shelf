@@ -61,14 +61,14 @@
                 <div ng-switch-when="images" style="height:100%;">
 
                     <style>
-                    .viewer{width:100%; min-height: calc(100% - 100px); max-height: calc(100% - 100px); margin-top:10px; }
-                    .viewer img{ display:none; max-width: 100%; max-height: 100%; margin: 0 auto auto; width:auto; height:auto; }
+                    .viewer{ position:relative; width:100%; min-height: calc(100% - 100px); max-height: calc(100% - 100px); margin-top:10px; }
+                    .viewer img{ position: absolute; left:50%; transform: translate(-50%, 0%); display:none; max-width: 100%; max-height: 100%; margin: 0 auto auto; width:auto; height:auto; }
                     .browser{ text-align: center; display:block; height:80px; background: #000; }
                     .browser li { float: left; list-style: none; }
                     .browser li:hover{ cursor: pointer; }
                     .browser li img { width:50px; height:50px; margin:4px; } 
                     .active { border: 2px solid #07293f; }
-                    .viewer iframe.show{ display:block; }
+                    .viewer img.show{ display:block; }
 
 
                     </style>

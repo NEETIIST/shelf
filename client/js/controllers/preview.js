@@ -24,7 +24,7 @@ app.controller('preview', function($scope,$http,$location,$sce) {
 		return $scope.content.images[$scope.content.images.indexOf(img)].active;
 	}
 
-	$http.get("http://shelf.n1z.pt/api/docs/"+$scope.id).
+	$http.get("http://shelf.neeti-ist.pt/api/docs/"+$scope.id).
 		then(function(response) {
 			var data = response.data;
 
@@ -40,22 +40,22 @@ app.controller('preview', function($scope,$http,$location,$sce) {
 			}
 			else if($scope.content.type=="application/pdf"){
 
-				$scope.content.filename = "https://docs.google.com/gview?embedded=true&url=http://shelf.n1z.pt/content/"+response.data.content[0].local;
-				$scope.download_url = "http://shelf.n1z.pt/download/"+response.data.content[0].local;
+				$scope.content.filename = "https://docs.google.com/gview?embedded=true&url=http://shelf.neeti-ist.pt/content/"+response.data.content[0].local;
+				$scope.download_url = "http://shelf.neeti-ist.pt/download/"+response.data.content[0].local;
 				if($scope.goodBrowsers)
-					$scope.content.filename = "http://shelf.n1z.pt/content/"+response.data.content[0].local;
+					$scope.content.filename = "http://shelf.neeti-ist.pt/content/"+response.data.content[0].local;
 			}
 			else{
 				$scope.content.type = "other";
-				$scope.download_url = "http://shelf.n1z.pt/download/"+response.data.content[0].local;
+				$scope.download_url = "http://shelf.neeti-ist.pt/download/"+response.data.content[0].local;
 			}
 
 			if($scope.content.type=="images"){		
 				console.log(response.data.content);
 				$scope.content.images = [];
 				for(i=0; i<response.data.content.length; i++){
-					if(i==0){ $scope.content.now = "http://shelf.n1z.pt/content/"+response.data.content[0].local; }
-					$scope.content.images.push({active: (i==0), src: "http://shelf.n1z.pt/content/"+response.data.content[i].local});
+					if(i==0){ $scope.content.now = "http://shelf.neeti-ist.pt/content/"+response.data.content[0].local; }
+					$scope.content.images.push({active: (i==0), src: "http://shelf.neeti-ist.pt/content/"+response.data.content[i].local});
 				}
 				console.log($scope.content.images);
 			}

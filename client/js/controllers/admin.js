@@ -103,8 +103,7 @@ app.controller('admin', ['$scope','$http','Documents','Reports',function($scope,
 	});
 
 
-	$scope.submitAdmin = function (data,admin){      
-		
+	$scope.submitAdmin = function (data,admin){      		
 		if (admin==0){
 			var user = {
             	username :  data.username,
@@ -113,22 +112,34 @@ app.controller('admin', ['$scope','$http','Documents','Reports',function($scope,
 			$scope.admins.splice($scope.admins.indexOf(data),1);
 
 		}else{
-			if (data.username==""){
+			$scope.add.username=$scope.add.username.toLowerCase();
+			if(/^\d+$/.test($scope.add.username)){
+				$scope.add.username="ist1"+ $scope.add.username;
+
+			}
+			console.log($scope.add.username.indexOf("ist1")==-1 && /^\d+$/.test($scope.add.username.substr(4, $scope.add.username.length)));
+			if ($scope.add.username.indexOf("ist1")==-1 && /^\d+$/.test($scope.add.username.substr(4, $scope.add.username.length))==false){
+				$scope.add.username="";
 				return;
 			}
+		
+
+			
 			var user = {
             	username : $scope.add.username,
             	admin    : true
         	};
         	$scope.admins.push(user);
         	$scope.add.username="";
+        	console.log(user);
+        	
 		}
 		
-        
+        /*
         
         $http.post("/api/admin/users",user).then(function(data,status){
             
-        });
+        });*/
         
 	}
 

@@ -4,8 +4,6 @@ app.controller('document', ['$scope', '$resource','$routeParams','Courses',
 
 	function ($scope, $resource, $routeParams, Courses) {
 
-		var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
-
 		// Title
 		$scope.title = $routeParams.course;
 
@@ -20,10 +18,11 @@ app.controller('document', ['$scope', '$resource','$routeParams','Courses',
 
 
 		$scope.go = function ( doc ) {
+			var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 			var url = "/preview/#/"+doc._id;
 
 			if(doc.content[0].mime.indexOf("application/pdf")!=-1 && iOS)
-				url = "http://shelf.n1z.pt/content/"+doc.content[0].local;
+				url = "http://shelf.neeti-ist.pt/content/"+doc.content[0].local;
 			
 			window.location.href=url;
 		};
@@ -80,30 +79,31 @@ app.controller('document', ['$scope', '$resource','$routeParams','Courses',
 			for (var i = 0; i < results.length; i++) {
 				$scope.tags.push(results[i]);
 			};
-			console.log($scope.tags);
+			
 		});
 		$scope.tags = [];
 		$scope.toggleTag = function(tag) {
 			
-			console.log($scope.selected.tags);
+		
 
     		var i = $scope.selected.tags.indexOf(tag);
     		if (i<0){
-    			console.log("por");
+    			
         		$scope.selected.tags.push(tag);
     		}
     		else{
-    			console.log("tirar");
+    			
         		$scope.selected.tags.splice(i,1);
     		}
-    		console.log($scope.selected.tags);
+    		
 		};
 		$scope.filterTag = function(doc) {
 			
 			if($scope.selected.tags.length==0)
 				return true;
 			for (var i = 0; i < doc.tags.length; i++) {
-    			if($scope.selected.tags.indexOf(doc.tags[i].text) != -1)	
+    			if($scope.selected.tags.indexOf(doc.tags[i].text) != -1)
+
     				return true;
 			}
         	return false;
@@ -116,21 +116,24 @@ app.controller('document', ['$scope', '$resource','$routeParams','Courses',
 			$scope.teachers = results;
 		});
 		$scope.teachers = [];
+
 		$scope.toggleTeacher = function(teacher) {
     		var i = $scope.selected.teachers.indexOf(teacher);
-    		if (i === -1)
-        		$scope.selected.teachers.push(teacher);
-    		else
-        		$scope.selected.teachers.splice(i,1);
+    		if (i === -1){
+    			
+        		$scope.selected.teachers.push(teacher);}
+    		else{
+    			
+        		$scope.selected.teachers.splice(i,1);}
 		};
-		$scope.filterTeacher = function(doc) {
+		$scope.filterTeacher = function(doc){
 			if($scope.selected.teachers.length==0)
 				return true;
-			if(!doc.teachers) return false; 
-			for (var i = 0; i < doc.teachers.length; i++) {
-    			if($scope.selected.teachers.indexOf(doc.teachers[i]) != -1)	
-    				return true;
-			}
+			if(!doc.teacher) return false;
+	
+			if($scope.selected.teachers.indexOf(doc.teacher) != -1)
+				return true;
+			
         	return false;
     	};
 

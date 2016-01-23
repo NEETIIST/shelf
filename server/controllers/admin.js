@@ -1,6 +1,7 @@
 var Document  = require("../models/document");
 var Report  = require("../models/report");
 var User  = require("../models/user");
+var Upload  = require("../models/upload");
 
 
 module.exports.isAdmin = function(req, res, next){
@@ -82,6 +83,12 @@ module.exports.updateAdmin = function(req,res){
 
     if (err)
         res.json({success:false});
+      
+    if(data.username.indexOf("ist1")==-1){
+      console.log("admin incorreto")
+      res.json({success:false});
+    }
+
     if (user) {
         user.admin = data.admin;
         user.save();
@@ -145,10 +152,7 @@ module.exports.getUser = function(req,res){
       console.log("\tDOCUMENTS json response");
         res.json({username: results.username , admin: results.admin, name: results.name});
       }
-  );
-
-  
-    
+  );  
 };
 
 
