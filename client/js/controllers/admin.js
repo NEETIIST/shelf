@@ -112,13 +112,14 @@ app.controller('admin', ['$scope','$http','Documents','Reports',function($scope,
 			$scope.admins.splice($scope.admins.indexOf(data),1);
 
 		}else{
-			$scope.add.username=$scope.add.username.toLowerCase();
+			
+			console.log(/^\d+$/.test($scope.add.username));
 			if(/^\d+$/.test($scope.add.username)){
 				$scope.add.username="ist1"+ $scope.add.username;
 
 			}
-			console.log($scope.add.username.indexOf("ist1")==-1 && /^\d+$/.test($scope.add.username.substr(4, $scope.add.username.length)));
-			if ($scope.add.username.indexOf("ist1")==-1 && /^\d+$/.test($scope.add.username.substr(4, $scope.add.username.length))==false){
+
+			if (($scope.add.username.indexOf("ist1")>-1 && /^\d+$/.test($scope.add.username.substr(4, $scope.add.username.length)))==false){
 				$scope.add.username="";
 				return;
 			}
