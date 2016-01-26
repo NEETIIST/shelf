@@ -24,7 +24,9 @@ app.factory('Documents', ['$http', function ($http) {
     				return;
     			}
     		}
-    		callback(null);
+    		$http.get("/api/docs/"+doc_id).then(function(result,status){
+	        	callback(result.data);
+	    	});
     	});
     };
     return factory;
@@ -122,24 +124,21 @@ app.controller('admin', ['$scope','$http','Documents','Reports',function($scope,
 				$scope.add.username="";
 				return;
 			}
-		
-
-			
 			var user = {
             	username : $scope.add.username,
             	admin    : true
         	};
         	$scope.admins.push(user);
         	$scope.add.username="";
-        	console.log(user);
+        	
         	
 		}
 		
-        /*
+        
         
         $http.post("/api/admin/users",user).then(function(data,status){
             
-        });*/
+        });
         
 	}
 
@@ -153,7 +152,6 @@ app.controller('admin', ['$scope','$http','Documents','Reports',function($scope,
 	}
 
 	$scope.updateDoc = function (data,hide){
-			 console.log(data._id);
 		hideBoolean=false;
 		approvedBoolean=false;
 		if (hide==1){

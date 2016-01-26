@@ -1,13 +1,16 @@
 
 
-app.controller('document', ['$scope', '$resource','$routeParams','Courses',
+app.controller('document', ['$scope', '$resource','$routeParams','Courses','User','$http',
 
-	function ($scope, $resource, $routeParams, Courses) {
+	function ($scope, $resource, $routeParams, Courses, User, $http) {
 
 		// Title
 		$scope.title = $routeParams.course;
+ 
 
-
+		User.isAdmin(function(admin){
+			$scope.admin=admin;
+		})
 
 		
 
@@ -40,13 +43,27 @@ app.controller('document', ['$scope', '$resource','$routeParams','Courses',
 		$scope.documents = [];
 
 		// Terms
+
 		var Term = $resource('/api/'+$routeParams.course+'/terms');
 		Term.query(function (results) {
+
+        results.sort(function(a,b){
+            sem_a = parseInt(a.split("º")[0]);
+            year_a = parseInt(a.split(" ")[2].split("/")[0]);
+            sem_b = parseInt(b.split("º")[0]);
+            year_b = parseInt(b.split(" ")[2].split("/")[0]);
+            a = year_a*10+sem_a;
+            b = year_b*10+sem_b;
+            
+            return b-a; 
+        });
+
 			for(i=1; i<results.length+1; i++){
 				$scope.terms.push({id:i,label:results[i-1]});
 			}
 		});
 		$scope.terms = [];
+    
 
 		$scope.filterTerm = function(doc){
 			if($scope.selected.terms.length==0)
@@ -55,12 +72,10 @@ app.controller('document', ['$scope', '$resource','$routeParams','Courses',
 			for(i=0; i<$scope.selected.terms.length; i++){
 				if(doc.academicTerm==$scope.terms[$scope.selected.terms[i].id-1].label)
 					return true;
-			}
-        	return false;
 		}
-
+        return false;
 		
-
+    }
 
 		// Selected
 		$scope.selected = {
@@ -163,6 +178,29 @@ app.controller('document', ['$scope', '$resource','$routeParams','Courses',
 			
         	return false;
     	};
+
+    	$scope.updateDoc = function(doc){
+    		window.location.href="#/admin/docs/"+doc._id;
+    	}
+
+
+
+    	$scope.removeDoc = function (doc){
+    		var response = confirm("Queres mesmo apagar?");
+   			if(response) {
+
+   				doc.hide=true;
+				$http.post("/api/admin/docs",doc).then(function(res,status){
+				   	$scope.documents.splice($scope.documents.indexOf(doc),1);  
+				});
+    		} 
+   		}
+
+
+
+
+
+    	/***********************************************/
 
     	// Tests
 		$scope.test = function(){

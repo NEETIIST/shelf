@@ -7,7 +7,7 @@ module.exports.getDocsTeachers   = function(req,res) {
 
 	console.log("\nGET /api/"+req.params.course+"/docteachers");
 
-  	Document.find({ course: { $regex : new RegExp(req.params.course, "i") }, approved: true }, 
+  	Document.find({ course: { $regex : new RegExp('^'+req.params.course+'$', "i") }, approved: true, hide:false }, 
     	function (err, results) {
         	teachers = [];
         	for(i=0; i<results.length; i++){
@@ -30,7 +30,7 @@ module.exports.getCourseTeachers   = function(req,res) {
   	
 	console.log("\nGET /api/"+req.params.course+"/teachers");
 
-  	Course.find({ acronym: { $regex : new RegExp(req.params.course, "i") } }, 
+  	Course.find({ acronym: { $regex : new RegExp('^'+req.params.course+'$', "i") } }, 
     	function (err, results) {
         	if(results){
             	if(results.length>0){

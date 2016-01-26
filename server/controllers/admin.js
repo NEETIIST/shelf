@@ -1,7 +1,7 @@
 var Document  = require("../models/document");
 var Report  = require("../models/report");
 var User  = require("../models/user");
-var Upload  = require("../models/upload");
+
 
 
 module.exports.isAdmin = function(req, res, next){
@@ -41,17 +41,31 @@ module.exports.docUpdate = function(req,res){
     if (err){
       res.json({success:false});
     }
-    doc.name = data.name;
-    doc.type = data.type;
-    if(data.teacher==null && data.teacher=='' ||data.academicTerm==null && data.academicTerm==''  ){
-      doc.teacher = data.teacher;
+
+    if(data.name!=null && data.name!="")
+      doc.name = data.name;
+    
+    if(data.type!=null && data.type!="")
+      doc.type = data.type;
+    
+    if(data.teacher!=null && data.teacher!="")
+      doc.teacher = data.teacher; 
+    
+    if(data.academicTerm!=null && data.academicTerm!='')
       doc.academicTerm = data.academicTerm;
-    }
-    doc.course = data.course;
-    doc.tags = data.tags;
-    doc.approved = data.approved;
-    doc.hide = data.hide;
-    console.log('conas');
+    
+    if(data.course!=null && data.course!='')
+      doc.course = data.course;
+    
+    if(data.tags!=null && data.tags!='')
+      doc.tags = data.tags;
+
+    if(data.approved!=null && data.approved!='')
+      doc.approved = data.approved;
+
+    if(data.hide!=null && data.hide!='')
+      doc.hide = data.hide;
+
     console.log(doc);
     doc.save();
     res.json({success:true});
@@ -76,7 +90,10 @@ module.exports.updateAdmin = function(req,res){
   
   console.log("\nPOST /api/admin/users");
   data = req.body;
-  
+  if(data.username.indexOf("ist1")==-1){
+      console.log("admin está num formato incorreto")
+      res.json({success:false});
+  }
  
 
   User.findOne({ 'username' : data.username }, function(err, user) {
@@ -84,10 +101,6 @@ module.exports.updateAdmin = function(req,res){
     if (err)
         res.json({success:false});
       
-    if(data.username.indexOf("ist1")==-1){
-      console.log("admin incorreto")
-      res.json({success:false});
-    }
 
     if (user) {
         user.admin = data.admin;

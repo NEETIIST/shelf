@@ -75,21 +75,22 @@
             <thead>
                 <tr>
                     <th>Nome</th>
-					<th>Uploader</th>
-					<th>Uploaded</th>
-					<th>Semestre</th>
+					<th class="hidden-xs" style="width:82px">Uploader</th>
+					<th style="width:95px">Uploaded</th>
+					<th style="width:170px">Semestre</th>
+                    <th style="width:75px" ng-show="admin">Acção</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-click="go(doc)" ng-repeat="doc in documents | filter:filterTeacher | filter:search | filter: filterType | filter: filterTag | filter: filterTerm">
-                    <td>{{doc.name}}</td>
-					<td>{{doc.uploader}}</td>
-					<td>{{doc.uploaded}}</td>
-					<td>{{doc.academicTerm}}</td>
+                <tr ng-repeat="doc in documents | filter:filterTeacher | filter:search | filter: filterType | filter: filterTag | filter: filterTerm">
+                    <td ng-click="go(doc)">{{doc.name}}</td>
+					<td ng-click="go(doc)">{{doc.uploader}}</td>
+					<td ng-click="go(doc)">{{doc.uploaded}}</td>
+					<td ng-click="go(doc)">{{doc.academicTerm}}</td>
+                    <td ng-show="admin"><button class="btn btn-xs btn-warning" ng-click="updateDoc(doc)"><span class="glyphicon glyphicon-pencil"></span></button> <button class="btn btn-xs btn-danger" ng-click="removeDoc(doc)"><span class="glyphicon glyphicon-trash"></span></button></td>
                 </tr>
             </tbody>
         </table>
         </div>
     </div>
-
 </div>

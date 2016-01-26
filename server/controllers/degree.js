@@ -6,7 +6,7 @@ module.exports.getTerms   = function(req,res) {
 
 	console.log("\nGET /api/"+req.params.course+"/terms");
 
-  	Document.find({ course: req.params.course, approved: true }, 
+  	Document.find({ course: req.params.course, approved: true, hide:false }, 
     	function (err, results) {
         	terms = [];
         	for(i=0; i<results.length; i++){

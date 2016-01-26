@@ -5,6 +5,9 @@ body { padding-top: 70px; font-family: 'Work Sans', sans-serif; }
 
 ul.autocomplete { padding:0; }
 
+ul.nav.navbar-nav.preview-buttons{ position: absolute; width: 100px; right: 0; padding: 0; margin: 0; }
+ul.nav.navbar-nav.preview-buttons li { float:right; }
+
 .navbar-brand { padding:7px; } .navbar-brand img { height:36px; }
 
 #intro h1{ font-size: 50px; }
@@ -13,8 +16,10 @@ ul.autocomplete { padding:0; }
 
 .cadeira .list-group-item{ overflow-x: hidden; white-space: nowrap; }
 .cadeira .label{ width:60px; display: inline-block; margin-right:15px; }
-.tags button { margin: 0 8px 8px 0; }
+.tags button { margin: 0 6px 6px 0; font-size:13px; padding:2px; }
 
+.breadcrumb { max-height:36px; overflow-y:hidden; white-space: nowrap; }
+.breadcrumb li a {white-space: nowrap; }
 
 .jumbotron { padding:20px; }
 

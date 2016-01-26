@@ -1,12 +1,11 @@
 var app = angular.module('shelf', ['ngTagsInput','ngResource','ngRoute','angularjs-dropdown-multiselect','ngFileUpload']);
 
-function isAdmin($location,User){
-    User.getInfo().then(function(res){
-        if(!res.data.admin)
+function adminButton($location,User){
+    User.isAdmin(function(admin){
+        if(!admin)
             $location.path('/');
     });
 };
-
 
 app.config(function($routeProvider, $httpProvider) {
     $routeProvider
@@ -25,17 +24,17 @@ app.config(function($routeProvider, $httpProvider) {
         .when('/admin', {
             templateUrl: 'views/admin.html',
             controller: 'admin',
-            resolve: { mess : function($location,User){ isAdmin($location,User); } }
+            resolve: { mess : function($location,User){ adminButton($location,User); } }
         })
         .when('/admin/docs/:docid', {
             templateUrl: 'views/admin/document.html',
             controller: 'editDocument',
-            resolve: { mess : function($location,User){ isAdmin($location,User); } }
+            resolve: { mess : function($location,User){ adminButton($location,User); } }
         })
         .when('/admin/reports/:reportid', {
             templateUrl: 'views/admin/report.html',
             controller: 'viewBugs',
-            resolve: { mess : function($location,User){ isAdmin($location,User); } }
+            resolve: { mess : function($location,User){ adminButton($location,User); } }
         })
         .when('/', {
             templateUrl: 'views/courses.html',
@@ -57,6 +56,34 @@ app.factory('User', function($http){
     }
 });
 
+app.factory('User', ['$http', function ($http) {
+    var factory = {};
+        factory.user = [];
+        factory.full = false;
+
+    factory.getUser = function(callback){
+        if(!factory.full){
+            $http.get('/api/user').then(function(data,status){
+                factory.user = data.data;
+                factory.full = true;
+                callback(factory.user);
+            });
+        }else{
+            callback(factory.user);
+        }
+    };
+
+    factory.isAdmin = function(callback){
+        factory.getUser(function(user){
+            if(user.admin)
+                callback(user.admin)
+            else
+                callback(false)
+        });
+    };
+    return factory;
+}]);
+
 
 
 
@@ -64,8 +91,8 @@ app.controller('navbar',['$scope','$location','User',function($scope,$location,$
      $scope.isActive = function (viewLocation) { 
         return viewLocation === $location.path();
     };
-    $user.getInfo().then(function(res){
-        $scope.user = res.data;
+    $user.getUser(function(user){
+        $scope.user=user;
     });
 
 }]);

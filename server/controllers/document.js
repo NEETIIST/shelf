@@ -56,7 +56,7 @@ module.exports.getDocs = function(req,res){
 
 	console.log("\nGET /api/"+req.params.course+"/docs");
 
-	Document.find({ course: { $regex : new RegExp(req.params.course, "i") }, approved: true , hide: false}, 
+	Document.find({ course: { $regex : new RegExp('^'+req.params.course+'$', "i") }, approved: true , hide: false}, 
     	function (err, results) {
     		console.log("\tDOCUMENTS json response");
         	res.json(results);

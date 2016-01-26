@@ -28,12 +28,12 @@
     <div class="container-fluid">
 
         <!-- Non-collapsing right-side icons -->
-        <ul class="nav navbar-nav" style="position:absolute; right:0; padding:0; margin:0">
-            <li ng-hide="content.type=='images' || content.type=='other'">
-                <a style="height:50px; padding-top:16px;" ng-href="{{download_url}}"><span class="glyphicon glyphicon-cloud-download"></span></a>
-            </li>
+        <ul class="nav navbar-nav preview-buttons">
             <li>
                 <a style="height:50px; padding-top:16px;" href="javascript:window.history.back();"><span class="glyphicon glyphicon-remove"></span></a>
+            </li>
+           <li ng-hide="content.type=='images' || content.type=='other'">
+                <a style="height:50px; padding-top:16px;" ng-href="{{download_url}}"><span class="glyphicon glyphicon-cloud-download"></span></a>
             </li>
         </ul>
 

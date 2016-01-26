@@ -68,7 +68,7 @@ app.controller("editDocument",['$resource','$scope','$http','Documents','$routeP
 
     	$http.post("/api/admin/docs",$scope.doc).then(function(data,status){
     		console.log(data);
-            window.location.href="#/admin";
+            window.history.back();
     	});
 
     }

@@ -4,7 +4,7 @@ module.exports.getTags = function(req,res) {
 
     console.log("\nGET /api/"+req.params.course+"/tags");
 
-    Document.find({ course: { $regex : new RegExp(req.params.course, "i") }, approved: true }, 
+    Document.find({ course: { $regex : new RegExp('^'+req.params.course+'$', "i") }, approved: true, hide: false }, 
         function (err, results) {
             tags = [];
 

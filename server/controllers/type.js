@@ -5,7 +5,7 @@ module.exports.getTypesByCourse   = function(req,res) {
 
     console.log("\nGET /api/"+req.params.course+"/types");
 
-    Document.find({ course: req.params.course, approved: true }, 
+    Document.find({ course: req.params.course, approved: true, hide: false }, 
         function (err, results) {
             types = [];
             for(i=0; i<results.length; i++){
