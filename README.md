@@ -6,13 +6,13 @@ Documents repository from IST
 ```
 sudo apt-get update
 ```
-    * if error
-    ```
-    sudo vim /etc/resolvconf/resolv.conf.d/base
-    > nameserver 8.8.8.8
-    > nameserver 8.8.4.4
-    sudo resolvconf -u    
-    ```
+ * if update error
+```
+sudo vim /etc/resolvconf/resolv.conf.d/base
+> nameserver 8.8.8.8
+> nameserver 8.8.4.4
+sudo resolvconf -u    
+```
 * Install GIT
 ```
 sudo apt-get install git
