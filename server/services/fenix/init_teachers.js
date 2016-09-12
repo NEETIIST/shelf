@@ -5,11 +5,12 @@ var Course 	= require("../../models/course.js");
 var mongoose =	require("mongoose");
 
 mongoose.connect('mongodb://localhost:27017/shelf');
+var total=0;
 
-Array.prototype.unique = function() {    
-    var o = {}, i, l = this.length, r = [];    
-    for(i=0; i<l;i+=1) o[this[i]] = this[i];    
-    for(i in o) r.push(o[i]);    
+Array.prototype.unique = function() {
+    var o = {}, i, l = this.length, r = [];
+    for(i=0; i<l;i+=1) o[this[i]] = this[i];
+    for(i in o) r.push(o[i]);
     return r;
 };
 
@@ -17,13 +18,16 @@ function insertTeacher(course,teacher){
 	Course.findOneAndUpdate({name:course},
 		{$addToSet: {teachers: teacher}},
 		{safe: true, upsert: true},
-		function(err, model) { }
+		function(err, model) {
+            total++;
+            console.log("#"+total+" "+teacher);
+        }
     );
 };
 
 var date = new Date();
 
-Degree.find({}, function (err, results) {	
+Degree.find({}, function (err, results) {
 	for (var d=0; d<results.length; d++){
 
 		degree = results[d];
@@ -31,7 +35,7 @@ Degree.find({}, function (err, results) {
 		for (i = 2006; i<=date.getFullYear(); i++){
 
 			academicTerm = i.toString()+"/"+(i+1).toString();
-			
+
 			fenix.coursesByDegree(degree.id,academicTerm,function(err,courses){
 
 				for(var c=0; c<courses.length; c++){
@@ -46,7 +50,7 @@ Degree.find({}, function (err, results) {
 
 							insertTeacher(course_name,teacher.name);
 						}
-				
+
 					});
 				}
 
@@ -54,4 +58,3 @@ Degree.find({}, function (err, results) {
 		}
 	}
 });
-
