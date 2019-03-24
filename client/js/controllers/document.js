@@ -17,7 +17,7 @@ app.controller('document', ['$scope', '$resource','$routeParams','Courses','User
 		Courses.getCourseByAcronym($routeParams.course, function(course) {
   			$scope.title = course.name;
 		});
-
+		//$scope.title = $routeParams.course;
 
 
 		$scope.go = function ( doc ) {

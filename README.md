@@ -50,3 +50,11 @@ node server/services/fenix/init_teachers.js
 ```
 sudo forever start server.js
 ```
+
+### List of files needed to change:
+
+client/js/controllers/courses.js
+client/js/controllers/preview.js
+client/views/courses.html
+server/config/init_data.js
+server/config/passport.js
